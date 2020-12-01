@@ -6,23 +6,31 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import java.io.IOException;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
+import il.cshaifasweng.OCSFMediatorExample.entities.Item;
+import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
 
-public class SimpleServer extends AbstractServer {
+public class SimpleServer extends AbstractServer 
+{
 
-	public SimpleServer(int port) {
-		super(port);
-		
+	public SimpleServer(int port) 
+	{
+		super(port);	
 	}
 
 	@Override
-	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+	protected void handleMessageFromClient(Object msg, ConnectionToClient client) 
+	{
 		String msgString = msg.toString();
-		if (msgString.startsWith("#warning")) {
+		if (msgString.startsWith("#warning")) 
+		{
 			Warning warning = new Warning("Warning from server!");
-			try {
+			try 
+			{
 				client.sendToClient(warning);
 				System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-			} catch (IOException e) {
+			} 
+			catch (IOException e) 
+			{
 				e.printStackTrace();
 			}
 		}
