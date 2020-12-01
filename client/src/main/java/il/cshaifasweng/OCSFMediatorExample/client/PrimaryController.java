@@ -5,14 +5,17 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class PrimaryController {
+public class PrimaryController 
+{
 
     @FXML
     void sendShowMenu(ActionEvent event) 
     {
+    	//System.out.println("im inside");
     	try 
     	{
-			SimpleClient.getClient().sendToServer("#warning");
+    		//System.out.println("im inside2");
+			SimpleClient.getClient().sendToServer("#showMenu");
 		} 
     	catch (IOException e) 
     	{

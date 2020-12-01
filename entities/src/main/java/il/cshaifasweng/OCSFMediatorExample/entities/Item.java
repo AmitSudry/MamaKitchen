@@ -17,12 +17,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "itmes")
-public class Item 
+public class Item implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

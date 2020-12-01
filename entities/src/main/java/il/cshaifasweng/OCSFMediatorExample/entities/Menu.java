@@ -17,10 +17,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Menu 
+public class Menu implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

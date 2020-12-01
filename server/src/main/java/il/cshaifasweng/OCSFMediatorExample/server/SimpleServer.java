@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
@@ -28,6 +31,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
 public class SimpleServer extends AbstractServer 
 {
 	private static Session session;
+	private List<Item> items;
 	
 	private static SessionFactory getSessionFactory() throws HibernateException 
 	{
@@ -85,7 +89,7 @@ public class SimpleServer extends AbstractServer
 		return allQuery.getResultList();
 	}
 	
-	public static void setUpDataBase()
+	public void setUpDataBase()
 	{
 		try 
 		{ 	
@@ -97,7 +101,16 @@ public class SimpleServer extends AbstractServer
         	
         	initializeData();
         	
-        	printMenu();
+        	this.items = getAll(Item.class);   	
+        	
+        	System.out.println("Item list:\n");
+
+        	for (Item item: items) 
+        	{
+        		System.out.println(item);       		
+        	}
+        	
+        	System.out.println("\nDone!");
 		} 
     	catch (Exception e) 
         {
@@ -118,20 +131,7 @@ public class SimpleServer extends AbstractServer
 		}
 	}
 	
-	public static void printMenu()
-	{
-		List<Item> items = getAll(Item.class);   	
-    	
-    	System.out.println("Item list:\n");
 
-    	for (Item item: items) 
-    	{
-    		System.out.println(item);       		
-    	}
-    	
-    	System.out.println("\nDone!");
-	}
-	
 	
 	public SimpleServer(int port) 
 	{
@@ -142,9 +142,13 @@ public class SimpleServer extends AbstractServer
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) 
 	{
 		String msgString = msg.toString();
-		if (msgString.startsWith("#warning")) 
+		System.out.println(msgString);
+		List<Item> itemsList = new ArrayList<Item>(this.items);
+		
+		
+		if (msgString.startsWith("#showMenu")) 
 		{
-			Warning warning = new Warning("Warning from server!");
+			Warning warning = new Warning("Warning from server!", itemsList);
 			try 
 			{
 				client.sendToClient(warning);

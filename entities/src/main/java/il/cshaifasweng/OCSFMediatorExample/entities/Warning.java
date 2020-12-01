@@ -2,31 +2,50 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.List;
 
-public class Warning implements Serializable {
+public class Warning implements Serializable 
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8224097662914849956L;
 	
+	List<Item> items;
 	private String message;
 	private LocalTime time;
-
-	public String getMessage() {
+	
+	public Warning(String message, List<Item> items) 
+	{
+		super();
+		this.message = message;
+		this.time = LocalTime.now();
+		this.items = items;
+	}
+		
+	public String getMessage() 
+	{
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(String message) 
+	{
 		this.message = message;
 	}
 
-	public Warning(String message) {
-		this.message = message;
-		this.time = LocalTime.now();
-	}
-
-	public LocalTime getTime() {
+	public LocalTime getTime() 
+	{
 		return time;
+	}
+	
+	public List<Item> getItems() 
+	{
+		return items;
+	}
+
+	public void setItems(List<Item> items) 
+	{
+		this.items = items;
 	}
 }

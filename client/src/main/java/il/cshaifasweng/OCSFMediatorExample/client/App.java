@@ -58,11 +58,9 @@ public class App extends Application
     @Subscribe
     public void onWarningEvent(WarningEvent event) 
     {
+    	//System.out.println("here");
     	Platform.runLater(() -> {
-    		Alert alert = new Alert(AlertType.WARNING,
-        			String.format("Message: %s\nTimestamp: %s\n",
-        					event.getWarning().getMessage(),
-        					event.getWarning().getTime().toString())
+    		Alert alert = new Alert(AlertType.WARNING, String.format(event.getWarning().getItems().toString())
         	);
         	alert.show();
     	});
