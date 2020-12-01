@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 public class PrimaryController {
 
     @FXML
-    void sendWarning(ActionEvent event) 
+    void sendShowMenu(ActionEvent event) 
     {
     	try 
     	{
