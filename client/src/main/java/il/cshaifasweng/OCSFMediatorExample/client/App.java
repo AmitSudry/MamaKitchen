@@ -26,7 +26,6 @@ public class App extends Application
     @Override
     public void start(Stage stage) throws IOException 
     {
-    	EventBus.getDefault().register(this);
     	client = SimpleClient.getClient();
     	client.openConnection();
         scene = new Scene(loadFXML("primary"), 640, 480);
@@ -51,22 +50,10 @@ public class App extends Application
 	public void stop() throws Exception 
     {
 		// TODO Auto-generated method stub
-    	EventBus.getDefault().unregister(this);
 		super.stop();
 	}
     
-    @Subscribe
-    public void onWarningEvent(WarningEvent event) 
-    {
-    	//System.out.println("here");
-    	Platform.runLater(() -> {
-    		Alert alert = new Alert(AlertType.WARNING, String.format(event.getWarning().getItems().toString())
-        	);
-        	alert.show();
-    	});
-    	
-    }
-
+    
 	public static void main(String[] args) {
         launch();
     }
