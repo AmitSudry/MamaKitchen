@@ -8,16 +8,32 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 public class SecondaryController implements Initializable 
 {
-
+	@FXML
+	private PasswordField password;
+	
+	@FXML
+	private TextField userName;
+	
     @FXML
     private void switchToPrimary() throws IOException 
     {
         App.setRoot("primary");
+    }
+    
+   
+    @FXML
+    void login(ActionEvent event) 
+    {
+    	userName.setText("");
+    	password.setText("");
     }
     
     @Subscribe

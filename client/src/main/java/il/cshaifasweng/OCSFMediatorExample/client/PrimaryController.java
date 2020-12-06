@@ -58,6 +58,12 @@ public class PrimaryController implements Initializable
 					+ priceText.getText() + " " 
 					+ typeText.getText());
 		}
+		
+		priceText.setText("");
+		typeText.setText("");
+		removeBool.setSelected(false);
+		
+		sendShowMenu(event);
     }
 	
     @FXML
@@ -78,7 +84,7 @@ public class PrimaryController implements Initializable
     @FXML
     void onUpdateChoiseClick(MouseEvent event) 
     {
-    	System.out.println(updateChoise.getValue().toString());
+    	//System.out.println(updateChoise.getValue().toString());
     }
 
     
@@ -93,9 +99,10 @@ public class PrimaryController implements Initializable
 
     	updateChoise.setValue("Update choise menu");
     	System.out.println(updateChoise.getValue());
-        //Retrieving the observable list
+    	
+    	updateChoise.getItems().clear();
         ObservableList<String> list = updateChoise.getItems();
-        //Adding items to the list
+        
         for(int i=0; i<event.getWarning().getItems().size(); i++)
         {
         	list.add(event.getWarning().getItems().get(i).getName());

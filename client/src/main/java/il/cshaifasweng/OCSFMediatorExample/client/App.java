@@ -28,7 +28,7 @@ public class App extends Application
     {
     	client = SimpleClient.getClient();
     	client.openConnection();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("secondary"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
