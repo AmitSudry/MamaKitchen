@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+//import il.cshaifasweng.OCSFMediatorExample.entities.TransferItemEvent;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,19 +15,51 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 
 public class PrimaryController implements Initializable 
 {
-	 @FXML
-	 private ChoiceBox<String> updateChoise;
+	@FXML
+    private ComboBox<String> updateChoise;
 	 
-	 @FXML
-	 private TextArea area;
-	 
+	@FXML
+	private TextArea area;
+	
+	@FXML
+	private Button updateItem;
+	
+	@FXML
+	private TextField typeText;
+	
+	@FXML
+	private CheckBox removeBool;
+	
+	@FXML
+	private TextField priceText;
+	
+	@FXML
+    void UpdateItem(ActionEvent event) throws IOException 
+	{
+		if(removeBool.isSelected())
+		{
+			SimpleClient.getClient().sendToServer("#removeItem " + updateChoise.getValue().toString());
+		}
+		else
+		{
+			SimpleClient.getClient().sendToServer("#updateItem "  
+					+ updateChoise.getValue().toString() + " "
+					+ priceText.getText() + " " 
+					+ typeText.getText());
+		}
+    }
+	
     @FXML
     void sendShowMenu(ActionEvent event) 
     {
@@ -40,17 +73,26 @@ public class PrimaryController implements Initializable
 			e.printStackTrace();
 		}
     }
+    
+
     @FXML
     void onUpdateChoiseClick(MouseEvent event) 
     {
-    	System.out.println(event.getSource().toString());
+    	System.out.println(updateChoise.getValue().toString());
     }
+
     
     @Subscribe
     public void onWarningEvent(WarningEvent event) 
     {
-    	area.setText(event.getWarning().getItems().toString());
-    	updateChoise.setValue("English");
+    	area.setText("");
+    	for(int i=0; i<event.getWarning().getItems().size(); i++)
+    	{	
+    		area.appendText(event.getWarning().getItems().get(i).toString() + "\n");
+    	}
+
+    	updateChoise.setValue("Update choise menu");
+    	System.out.println(updateChoise.getValue());
         //Retrieving the observable list
         ObservableList<String> list = updateChoise.getItems();
         //Adding items to the list
@@ -59,6 +101,7 @@ public class PrimaryController implements Initializable
         	list.add(event.getWarning().getItems().get(i).getName());
         }	
     }
+    
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 

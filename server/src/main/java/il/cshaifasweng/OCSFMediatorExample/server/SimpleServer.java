@@ -131,7 +131,26 @@ public class SimpleServer extends AbstractServer
 		}
 	}
 	
-
+	private void updateItem(String itemToUpdate, String newPrice, String newType)
+	{
+		int index = -1;
+		{
+			for(int i=0; i<items.size(); i++)
+			{
+				if(items.get(i).getName().equals(itemToUpdate)) //Found target item to update
+				{
+					index = i;
+					break;
+				}
+			}
+		}
+		
+		if(index != -1)
+		{
+			items.get(index).setPrice(Double.parseDouble(newPrice));
+			items.get(index).setType(newType);
+		}	
+	}
 	
 	public SimpleServer(int port) 
 	{
@@ -159,9 +178,27 @@ public class SimpleServer extends AbstractServer
 				e.printStackTrace();
 			}
 		}
-		else if (msgString.startsWith("#showMenu"))
+		else if (msgString.startsWith("#updateItem"))
 		{
-			System.out.println("hi");
+			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
+			updateItem(tokens[1], tokens[2], tokens[3]);
+		}
+		else if(msgString.startsWith("#removeItem"))
+		{
+			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
+			int index = -1;
+			{
+				for(int i=0; i<items.size(); i++)
+				{
+					if(items.get(i).getName().equals(tokens[1])) //Found target item to remove
+					{
+						index = i;
+						break;
+					}
+				}
+			}
+			if(index != -1)
+				items.remove(index);
 		}
 
 	}
