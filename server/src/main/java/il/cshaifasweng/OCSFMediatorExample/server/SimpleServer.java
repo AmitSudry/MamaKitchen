@@ -32,6 +32,9 @@ public class SimpleServer extends AbstractServer
 {
 	private static Session session;
 	private List<Item> items;
+	/*
+	 * TODO entities: All types of workers, Branch and chain. 
+	 */
 	
 	private static SessionFactory getSessionFactory() throws HibernateException 
 	{
@@ -59,10 +62,28 @@ public class SimpleServer extends AbstractServer
 		Item i3 = new Item("Yogurt", "branch", 13.5, menu);
 		Item i4 = new Item("Cake", "chain", 105.5, menu);
 		
+		Item i5 = new Item("Pie", "chain", 81, menu);
+		Item i6 = new Item("Chicken", "branch", 82, menu);
+		Item i7 = new Item("Rice", "branch", 49, menu);
+		Item i8 = new Item("Hamburger", "branch", 47.5, menu);
+		
+		Item i9 = new Item("Pasta", "branch", 35.5, menu);
+		Item i10 = new Item("Pizza", "chain", 25, menu);
+		Item i11 = new Item("Tea", "branch", 10.3, menu);
+		Item i12 = new Item("Coffee", "chain", 8, menu);
+		
 		session.save(i1);
 		session.save(i2);
 		session.save(i3);
 		session.save(i4);
+		session.save(i5);
+		session.save(i6);
+		session.save(i7);
+		session.save(i8);
+		session.save(i9);
+		session.save(i10);
+		session.save(i11);
+		session.save(i12);
 		
 		session.flush();
 		
@@ -70,6 +91,15 @@ public class SimpleServer extends AbstractServer
     	menu.addItem(i2);
     	menu.addItem(i3);
     	menu.addItem(i4);
+    	menu.addItem(i5);
+    	menu.addItem(i6);
+    	menu.addItem(i7);
+    	menu.addItem(i8);
+    	menu.addItem(i9);
+    	menu.addItem(i10);
+    	menu.addItem(i11);
+    	menu.addItem(i12);
+
     	
     	session.save(menu);
     	
