@@ -24,7 +24,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
+import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetItems;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
 
@@ -194,10 +195,13 @@ public class SimpleServer extends AbstractServer
 		System.out.println(msgString);
 		List<Item> itemsList = new ArrayList<Item>(this.items);
 		
-		
+		if (msg.getClass().equals(Delivery.class)) 
+		{
+
+		}
 		if (msgString.startsWith("#showMenu")) 
 		{
-			Warning warning = new Warning("Warning from server!", itemsList);
+			GetItems warning = new GetItems("Warning from server!", itemsList);
 			try 
 			{
 				client.sendToClient(warning);

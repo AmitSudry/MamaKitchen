@@ -3,18 +3,18 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import java.util.List;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
-import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetItems;
 
-public class WarningEvent {
-	private Warning warning;
+public class GetItemsEvent {
+	private GetItems warning;
 	
 	
-	public Warning getWarning() 
+	public GetItems getWarning() 
 	{
 		return warning;
 	}
 
-	public WarningEvent(Warning warning) 
+	public GetItemsEvent(GetItems warning) 
 	{
 		this.warning = warning;
 	}

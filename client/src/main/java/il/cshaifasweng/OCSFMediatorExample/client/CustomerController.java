@@ -24,8 +24,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 
-public class PrimaryController implements Initializable 
+public class CustomerController implements Initializable 
 {
+	@FXML
+    private Button PreviewMenu;
+
+    @FXML
+    private Button OrderDelivery;
+
+    @FXML
+    private Button BookTable;
+
+    @FXML
+    private Button NoReservation;
+
+    @FXML
+    private Button Complaint;
+    
 	@FXML
     private ComboBox<String> updateChoise;
 	 
@@ -44,6 +59,39 @@ public class PrimaryController implements Initializable
 	@FXML
 	private TextField priceText;
 	
+	@FXML
+    private Button GoBack;
+	
+	@FXML
+	void SwitchToLoginController() throws IOException
+	{
+		App.setRoot("login");
+	}
+	
+	@FXML
+    void SwitchToComplaintController() throws IOException
+	{
+		App.setRoot("complaint");
+    }
+
+    @FXML
+    void SwitchToDeliveryController() throws IOException
+    {
+    	App.setRoot("delivery");
+    }
+
+    @FXML
+    void SwitchToMenuController() throws IOException
+    {
+    	App.setRoot("menu");
+    }
+
+    @FXML
+    void SwitchToReservationController() throws IOException
+    {
+    	App.setRoot("reservation");
+    }
+    
 	@FXML
     void UpdateItem(ActionEvent event) throws IOException 
 	{
@@ -79,26 +127,16 @@ public class PrimaryController implements Initializable
 			e.printStackTrace();
 		}
     }
-    
-
-    @FXML
-    void onUpdateChoiseClick(MouseEvent event) 
-    {
-    	//System.out.println(updateChoise.getValue().toString());
-    }
-
+     
     
     @Subscribe
-    public void onWarningEvent(WarningEvent event) 
+    public void onWarningEvent(GetItemsEvent event) 
     {
     	area.setText("");
     	for(int i=0; i<event.getWarning().getItems().size(); i++)
     	{	
     		area.appendText(event.getWarning().getItems().get(i).toString() + "\n");
     	}
-
-    	updateChoise.setValue("Update choise menu");
-    	System.out.println(updateChoise.getValue());
     	
     	updateChoise.getItems().clear();
         ObservableList<String> list = updateChoise.getItems();

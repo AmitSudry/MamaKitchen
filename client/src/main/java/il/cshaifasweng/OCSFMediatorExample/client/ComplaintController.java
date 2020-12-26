@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class SecondaryController implements Initializable 
+public class ComplaintController implements Initializable 
 {
 	@FXML
 	private PasswordField password;
@@ -25,7 +25,7 @@ public class SecondaryController implements Initializable
     @FXML
     private void switchToPrimary() throws IOException 
     {
-        App.setRoot("primary");
+        App.setRoot("customer");
     }
     
    
@@ -37,28 +37,9 @@ public class SecondaryController implements Initializable
     }
     
     @Subscribe
-    public void onTransfetItemEvent(TransferItemEvent event) throws IOException 
+    public void onTransfetItemEvent(DeliveryEvent event) throws IOException 
     {
-    	if(event.getTransferItem().isRemove())
-    	{
-    		try //remove item and its name
-        	{
-    			SimpleClient.getClient().sendToServer("#removeItem " + event.getTransferItem().getItemNameToUpdate());
-    		} 
-        	catch (IOException e) 
-        	{
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    	}
-    	else 
-    	{
-    		SimpleClient.getClient().sendToServer("#updateItem "  
-    				+ event.getTransferItem().getItemNameToUpdate()  
-    				+ String.valueOf(event.getTransferItem().getNewPrice()) 
-    				+ event.getTransferItem().getNewType());
-    	}
-    	
+   
     }
     
 	@Override

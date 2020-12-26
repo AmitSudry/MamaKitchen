@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 
-public class Warning implements Serializable 
+public class GetItems implements Serializable 
 {
 
 	/**
@@ -16,7 +16,7 @@ public class Warning implements Serializable
 	private String message;
 	private LocalTime time;
 	
-	public Warning(String message, List<Item> items) 
+	public GetItems(String message, List<Item> items) 
 	{
 		super();
 		this.message = message;
