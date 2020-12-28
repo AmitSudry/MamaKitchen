@@ -12,30 +12,59 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 
 public class ComplaintController implements Initializable 
 {
 	@FXML
-	private PasswordField password;
-	
-	@FXML
-	private TextField userName;
-	
+    private TextField Name;
+
     @FXML
-    private void switchToPrimary() throws IOException 
+    private TextArea Complaint;
+
+    @FXML
+    private TextField ComplaintStatus;
+
+    @FXML
+    void SwitchToCustomerController(ActionEvent event) throws IOException 
     {
-        App.setRoot("customer");
+    	App.setRoot("customer");
     }
     
-   
     @FXML
-    void login(ActionEvent event) 
+    void FileComplaint(ActionEvent event) 
     {
-    	userName.setText("");
-    	password.setText("");
+    	if(Name.getText().equals(""))
+    	{
+    		ComplaintStatus.setText("You must enter your name!");
+    		return;
+    	}
+    	
+    	if(Complaint.getText().equals("") || Complaint.getText().equals("Please type in your compaint"))
+    	{
+    		ComplaintStatus.setText("You must type in your complaint!");
+    		return;
+    	}
+    	
+    	Complaint c = new Complaint(Name.getText(), Complaint.getText());
+    	Complaint.setText("");
+    	Name.setText("");
+    	
+    	try 
+    	{
+        	SimpleClient.getClient().sendToServer(c);
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	ComplaintStatus.setText("Your complaint has been sent!");
     }
-    
+
     @Subscribe
     public void onTransfetItemEvent(DeliveryEvent event) throws IOException 
     {

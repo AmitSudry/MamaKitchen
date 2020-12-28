@@ -7,14 +7,14 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
 
 public class DeliveryEvent 
 {
-	private DeliveryEvent deliveryDetails;
+	private Delivery deliveryDetails;
 	
-	public DeliveryEvent getTransferItem() 
+	public Delivery getDelivery() 
 	{
 		return deliveryDetails;
 	}
 
-	public DeliveryEvent(DeliveryEvent delInfo) 
+	public DeliveryEvent(Delivery delInfo) 
 	{
 		this.deliveryDetails = delInfo;
 	}

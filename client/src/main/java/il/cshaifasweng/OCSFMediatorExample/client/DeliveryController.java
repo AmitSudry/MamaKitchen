@@ -24,7 +24,7 @@ import javafx.scene.control.TextField;
 
 public class DeliveryController implements Initializable 
 {
-private Delivery cart;
+	private Delivery cart;
 	
 	private List<Item> menuItems;
 	
@@ -83,13 +83,23 @@ private Delivery cart;
     	if(Address.getText().equals("") || Name.getText().equals("")
     			|| Phone.getText().equals("") || DatePick.getValue()==null
     			|| HourPick.getValue()==null || PaymentPick.getValue()==null
-    			|| MinutesPick.getValue()==null)
+    			|| MinutesPick.getValue()==null || TAOrDeliveryPick.getValue() == null)
     	{
     		OrderStatus.setText("Order Status: You are missing fields!");
     		return;
     	}
+    	cart.setAddress(Address.getText());
+    	cart.setName(Name.getText());
+    	cart.setPhoneNumber(Phone.getText());
+    	boolean isTA = TAOrDeliveryPick.getValue().toString().equals("TakeAway") ? true : false;
+    	cart.setTA(isTA);
+    	cart.setHour(Integer.parseInt(HourPick.getValue().toString() + MinutesPick.getValue().toString()));
+    	boolean isCredit = PaymentPick.getValue().toString().equals("Credit") ? true : false;
+    	cart.setCreditCard(isCredit);
+    	cart.setDate(DatePick.getValue().toString());
+    	cart.setTotal(Double.parseDouble(Total.getText()));
     	
-    	OrderStatus.setText("Order Status: Your order has been accepted!");
+    	OrderStatus.setText("Your order has been accepted!");
     	Address.setText("");
     	Name.setText("");
     	Phone.setText("");
@@ -100,6 +110,21 @@ private Delivery cart;
     	ItemsPick.setValue(null);
     	TAOrDeliveryPick.setValue(null);
     	Total.setText("");
+    	SelectedItems.setText("");
+    	
+    	try 
+    	{
+        	SimpleClient.getClient().sendToServer(cart);
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	cart = new Delivery();
+		List<Item> l = new ArrayList<Item>();
+		cart.setItemsList(l);
     }
 
     @FXML

@@ -59,13 +59,15 @@
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#ConfirmDelivery" text="Confirm Delivery" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <TextField fx:id="OrderStatus" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="267.0" text="Order Status:" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#ConfirmDelivery" text="Confirm Delivery" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <TextField fx:id="OrderStatus" editable="false" layoutX="65.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Label text="Order Status:" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
       <Button layoutX="247.0" layoutY="234.0" mnemonicParsing="false" onAction="#SwitchToCustomerController" text="Go Back" />

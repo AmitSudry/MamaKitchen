@@ -11,7 +11,7 @@ public class Delivery implements Serializable
 	
 	List<Item> itemsList;
 	private String date; //date of delivey "22.11.20"
-	private int hour; //hour of deliver "1355"
+	private int hour; //hour of deliver "1355" may also be 850 which means 08:50!!!!!
 	private boolean isTA; 
 	private String name; //name of customer
 	private String address; //address in case of not TA

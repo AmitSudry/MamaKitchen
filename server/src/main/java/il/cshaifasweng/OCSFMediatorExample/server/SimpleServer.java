@@ -24,10 +24,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetItems;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
+import il.cshaifasweng.OCSFMediatorExample.entities.Login;
 import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
+import il.cshaifasweng.OCSFMediatorExample.entities.Reservation;
 
 public class SimpleServer extends AbstractServer 
 {
@@ -192,14 +195,27 @@ public class SimpleServer extends AbstractServer
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) 
 	{
 		String msgString = msg.toString();
-		System.out.println(msgString);
+		//System.out.println(msgString);
 		List<Item> itemsList = new ArrayList<Item>(this.items);
 		
+		System.out.println();
 		if (msg.getClass().equals(Delivery.class)) 
 		{
-
+			System.out.println("Recived the following delivery event:\n" + msgString);
 		}
-		if (msgString.startsWith("#showMenu")) 
+		else if (msg.getClass().equals(Login.class)) 
+		{
+			System.out.println("Recived the following login event:\n" + msgString);
+		}
+		else if (msg.getClass().equals(Reservation.class)) 
+		{
+			System.out.println("Recived the following reservation event:\n" + msgString);
+		}
+		else if (msg.getClass().equals(Complaint.class)) 
+		{
+			System.out.println("Recived the following reservation event:\n" + msgString);
+		}
+		else if (msgString.startsWith("#showMenu")) 
 		{
 			GetItems warning = new GetItems("Warning from server!", itemsList);
 			try 
