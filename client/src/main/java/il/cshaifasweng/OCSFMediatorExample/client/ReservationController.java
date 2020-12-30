@@ -50,7 +50,15 @@ public class ReservationController implements Initializable
     @FXML
     private TextField ReservationStatus;
 
-
+    @FXML
+    void ApproveBranchChoise(ActionEvent event)
+    {
+    	HourPick.setValue(null);
+    	/*
+         * Need to set available hours according to the opening hours
+         */
+    }
+    
     @FXML
     void BookTable(ActionEvent event) 
     {
@@ -63,10 +71,21 @@ public class ReservationController implements Initializable
     		return;
     	}
     	
+    	int numOfPeople = -1;
+    	try 
+    	{
+           numOfPeople = Integer.parseInt(NumberOfPeople.getText());
+        } 
+    	catch (final NumberFormatException e) 
+    	{
+    		ReservationStatus.setText("Invalid number of people!");
+    		return;
+        }
+    	
     	boolean isInside = DiningPick.getValue().toString().equals("Inside") ? true : false;
     	
     	Reservation r = new Reservation(BranchPick.getValue().toString(), Date.getValue().toString(),
-    			Integer.parseInt(NumberOfPeople.getText()), Integer.parseInt(HourPick.getValue().toString()),
+    			numOfPeople, Integer.parseInt(HourPick.getValue().toString()),
     			Name.getText(), isInside, Phone.getText());
     	
     	Phone.setText("");
@@ -108,10 +127,6 @@ public class ReservationController implements Initializable
         }	
         
         branchList = event.getDetails().getBranches();
-        
-        /*
-         * Need to set available hours according to the opening hours
-         */
     }
     
 	@Override
@@ -119,6 +134,16 @@ public class ReservationController implements Initializable
 	{
 		// TODO Auto-generated method stub
 		EventBus.getDefault().register(this);
+		
+		try 
+    	{
+			SimpleClient.getClient().sendToServer("#showMenu");
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		DiningPick.getItems().clear();
         ObservableList<String> list = DiningPick.getItems();

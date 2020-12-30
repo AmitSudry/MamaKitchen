@@ -33,7 +33,7 @@
             <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="141.0" />
             <TextField editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="121.0" text="How many people?" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
             <TextField editable="false" layoutX="132.0" layoutY="31.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="182.0" text="Choose your prefered branch:" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-            <ComboBox fx:id="BranchPick" prefHeight="25.0" prefWidth="134.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="BranchPick" onAction="#ApproveBranchChoise" prefHeight="25.0" prefWidth="134.0" GridPane.columnIndex="1" />
             <TextField editable="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="156.0" text="Enter your prefered hour:" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
             <ComboBox fx:id="HourPick" layoutX="234.0" layoutY="10.0" prefHeight="25.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="NumberOfPeople" layoutX="10.0" layoutY="74.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />

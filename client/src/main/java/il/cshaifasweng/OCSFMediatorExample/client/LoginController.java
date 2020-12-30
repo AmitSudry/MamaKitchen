@@ -35,7 +35,7 @@ public class LoginController implements Initializable
     
    
     @FXML
-    void login(ActionEvent event) 
+    void login(ActionEvent event) throws IOException 
     {
     	if(userName.getText().equals("") || password.getText().equals(""))
     	{
@@ -55,6 +55,8 @@ public class LoginController implements Initializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
+    	App.setRoot("employeeMain");
     }
     
     @Subscribe
