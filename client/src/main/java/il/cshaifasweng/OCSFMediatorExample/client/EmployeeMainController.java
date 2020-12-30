@@ -60,7 +60,7 @@ public class EmployeeMainController implements Initializable
 	}
 	
     @Subscribe
-    public void onWarningEvent(GetItemsEvent event) 
+    public void onWarningEvent(GetBranchesEvent event) 
     {
     	
     }

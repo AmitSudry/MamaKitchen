@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 
-public class GetItems implements Serializable 
+public class GetBranches implements Serializable 
 {
 
 	/**
@@ -12,16 +12,16 @@ public class GetItems implements Serializable
 	 */
 	private static final long serialVersionUID = -8224097662914849956L;
 	
-	List<Item> items;
+	List<Branch> branches;
 	private String message;
 	private LocalTime time;
 	
-	public GetItems(String message, List<Item> items) 
+	public GetBranches(String message, List<Branch> branches) 
 	{
 		super();
 		this.message = message;
 		this.time = LocalTime.now();
-		this.items = items;
+		this.branches = branches;
 	}
 		
 	public String getMessage() 
@@ -39,13 +39,13 @@ public class GetItems implements Serializable
 		return time;
 	}
 	
-	public List<Item> getItems() 
+	public List<Branch> getBranches() 
 	{
-		return items;
+		return branches;
 	}
 
-	public void setItems(List<Item> items) 
+	public void setBranches(List<Branch> branches) 
 	{
-		this.items = items;
+		this.branches = branches;
 	}
 }

@@ -26,16 +26,19 @@ import java.io.ObjectOutputStream;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
-import il.cshaifasweng.OCSFMediatorExample.entities.GetItems;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Login;
 import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
 import il.cshaifasweng.OCSFMediatorExample.entities.Reservation;
+import il.cshaifasweng.OCSFMediatorExample.entities.Branch;
 
 public class SimpleServer extends AbstractServer 
 {
 	private static Session session;
 	private List<Item> items;
+	private List<Branch> branches;
+	
 	/*
 	 * TODO entities: All types of workers, Branch and chain. 
 	 */
@@ -45,6 +48,7 @@ public class SimpleServer extends AbstractServer
 		Configuration configuration =new Configuration();
 		configuration.addAnnotatedClass(Item.class);
 		configuration.addAnnotatedClass(Menu.class);
+		configuration.addAnnotatedClass(Branch.class);
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
@@ -55,26 +59,31 @@ public class SimpleServer extends AbstractServer
 	
 	private static void initializeData() throws Exception 
 	{
-		Menu menu = new Menu("RestMenu");
+		Menu menu1 = new Menu("RestMenu_Haifa");
+		Branch b1 = new Branch("Haifa");
 		
-		session.save(menu);
+		menu1.setBranch(b1);
+		b1.setMenu(menu1);
+		
+		session.save(menu1);
+		session.save(b1);
 		
 		session.flush();
 		
-		Item i1 = new Item("Banana", "chain", 50.5, menu);
-		Item i2 = new Item("Apple", "chain", 12, menu);
-		Item i3 = new Item("Yogurt", "branch", 13.5, menu);
-		Item i4 = new Item("Cake", "chain", 105.5, menu);
+		Item i1 = new Item("Banana", "chain", 50.5, menu1);
+		Item i2 = new Item("Apple", "chain", 12, menu1);
+		Item i3 = new Item("Yogurt", "branch", 13.5, menu1);
+		Item i4 = new Item("Cake", "chain", 105.5, menu1);
 		
-		Item i5 = new Item("Pie", "chain", 81, menu);
-		Item i6 = new Item("Chicken", "branch", 82, menu);
-		Item i7 = new Item("Rice", "branch", 49, menu);
-		Item i8 = new Item("Hamburger", "branch", 47.5, menu);
+		Item i5 = new Item("Pie", "chain", 81, menu1);
+		Item i6 = new Item("Chicken", "branch", 82, menu1);
+		Item i7 = new Item("Rice", "branch", 49, menu1);
+		Item i8 = new Item("Hamburger", "branch", 47.5, menu1);
 		
-		Item i9 = new Item("Pasta", "branch", 35.5, menu);
-		Item i10 = new Item("Pizza", "chain", 25, menu);
-		Item i11 = new Item("Tea", "branch", 10.3, menu);
-		Item i12 = new Item("Coffee", "chain", 8, menu);
+		Item i9 = new Item("Pasta", "branch", 35.5, menu1);
+		Item i10 = new Item("Pizza", "chain", 25, menu1);
+		Item i11 = new Item("Tea", "branch", 10.3, menu1);
+		Item i12 = new Item("Coffee", "chain", 8, menu1);
 		
 		session.save(i1);
 		session.save(i2);
@@ -91,21 +100,80 @@ public class SimpleServer extends AbstractServer
 		
 		session.flush();
 		
-    	menu.addItem(i1);
-    	menu.addItem(i2);
-    	menu.addItem(i3);
-    	menu.addItem(i4);
-    	menu.addItem(i5);
-    	menu.addItem(i6);
-    	menu.addItem(i7);
-    	menu.addItem(i8);
-    	menu.addItem(i9);
-    	menu.addItem(i10);
-    	menu.addItem(i11);
-    	menu.addItem(i12);
+    	menu1.addItem(i1);
+    	menu1.addItem(i2);
+    	menu1.addItem(i3);
+    	menu1.addItem(i4);
+    	menu1.addItem(i5);
+    	menu1.addItem(i6);
+    	menu1.addItem(i7);
+    	menu1.addItem(i8);
+    	menu1.addItem(i9);
+    	menu1.addItem(i10);
+    	menu1.addItem(i11);
+    	menu1.addItem(i12);
 
     	
-    	session.save(menu);
+    	session.save(menu1);
+    	
+    	session.flush();
+    	
+    	Menu menu2 = new Menu("RestMenu_jerusalem");
+		Branch b2 = new Branch("Jerusalem");
+		
+		menu2.setBranch(b2);
+		b2.setMenu(menu2);
+		
+		session.save(menu2);
+		session.save(b2);
+		
+		session.flush();
+		
+		Item i13 = new Item("Banana_jerusalem", "chain", 50.5, menu2);
+		Item i14 = new Item("Apple_jerusalem", "chain", 12, menu2);
+		Item i15 = new Item("Yogurt_jerusalem", "branch", 13.5, menu2);
+		Item i16 = new Item("Cake_jerusalem", "chain", 105.5, menu2);
+		
+		Item i17 = new Item("Pie_jerusalem", "chain", 81, menu2);
+		Item i18 = new Item("Chicken_jerusalem", "branch", 82, menu2);
+		Item i19 = new Item("Rice_jerusalem", "branch", 49, menu2);
+		Item i20 = new Item("Hamburger_jerusalem", "branch", 47.5, menu2);
+		
+		Item i21 = new Item("Pasta_jerusalem", "branch", 35.5, menu2);
+		Item i22 = new Item("Pizza_jerusalem", "chain", 25, menu2);
+		Item i23 = new Item("Tea_jerusalem", "branch", 10.3, menu2);
+		Item i24 = new Item("Coffee_jerusalem", "chain", 8, menu2);
+		
+		session.save(i13);
+		session.save(i14);
+		session.save(i15);
+		session.save(i16);
+		session.save(i17);
+		session.save(i18);
+		session.save(i19);
+		session.save(i20);
+		session.save(i21);
+		session.save(i22);
+		session.save(i23);
+		session.save(i24);
+		
+		session.flush();
+		
+    	menu2.addItem(i13);
+    	menu2.addItem(i14);
+    	menu2.addItem(i15);
+    	menu2.addItem(i16);
+    	menu2.addItem(i17);
+    	menu2.addItem(i18);
+    	menu2.addItem(i19);
+    	menu2.addItem(i20);
+    	menu2.addItem(i21);
+    	menu2.addItem(i22);
+    	menu2.addItem(i23);
+    	menu2.addItem(i24);
+
+    	
+    	session.save(menu2);
     	
     	session.flush();
     	
@@ -136,12 +204,20 @@ public class SimpleServer extends AbstractServer
         	initializeData();
         	
         	this.items = getAll(Item.class);   	
+        	this.branches = getAll(Branch.class);
         	
-        	System.out.println("Item list:\n");
+        	System.out.println("\nItem list:\n");
 
         	for (Item item: items) 
         	{
         		System.out.println(item);       		
+        	}
+        	
+        	System.out.println("\nBranch list:\n");
+
+        	for (Branch branch: branches) 
+        	{
+        		System.out.println(branch);       		
         	}
         	
         	System.out.println("\nDone!");
@@ -196,7 +272,7 @@ public class SimpleServer extends AbstractServer
 	{
 		String msgString = msg.toString();
 		//System.out.println(msgString);
-		List<Item> itemsList = new ArrayList<Item>(this.items);
+		List<Branch> branchesList = new ArrayList<Branch>(this.branches);
 		
 		System.out.println();
 		if (msg.getClass().equals(Delivery.class)) 
@@ -217,7 +293,7 @@ public class SimpleServer extends AbstractServer
 		}
 		else if (msgString.startsWith("#showMenu")) 
 		{
-			GetItems warning = new GetItems("Warning from server!", itemsList);
+			GetBranches warning = new GetBranches("Warning from server!", branchesList);
 			try 
 			{
 				client.sendToClient(warning);

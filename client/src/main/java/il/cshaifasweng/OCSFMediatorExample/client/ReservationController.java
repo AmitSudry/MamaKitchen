@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Branch;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Reservation;
 import javafx.collections.ObservableList;
@@ -23,7 +24,7 @@ import javafx.scene.control.TextField;
 public class ReservationController implements Initializable 
 {
 	
-	//private List<Branch> branchList;
+	private List<Branch> branchList;
 	
 	@FXML
     private TextField Phone;
@@ -96,9 +97,21 @@ public class ReservationController implements Initializable
     }
 	
 	@Subscribe
-    public void onWarningEvent(GetItemsEvent event) 
+    public void onWarningEvent(GetBranchesEvent event) 
     {
-    
+		BranchPick.getItems().clear();
+        ObservableList<String> list = BranchPick.getItems();
+        
+        for(int i=0; i<event.getDetails().getBranches().size(); i++)
+        {
+        	list.add(event.getDetails().getBranches().get(i).getName());
+        }	
+        
+        branchList = event.getDetails().getBranches();
+        
+        /*
+         * Need to set available hours according to the opening hours
+         */
     }
     
 	@Override
@@ -112,12 +125,6 @@ public class ReservationController implements Initializable
         
         list.add("Inside");
         list.add("Outside");
-        
-        BranchPick.getItems().clear();
-        ObservableList<String> list1 = BranchPick.getItems();
-        
-        list1.add("Haifa");
-        list1.add("Jerusalem");
         
         HourPick.getItems().clear();
         ObservableList<String> list2 = HourPick.getItems();

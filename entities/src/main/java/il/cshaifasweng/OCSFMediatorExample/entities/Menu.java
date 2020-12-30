@@ -14,24 +14,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
+@Table(name = "menus")
 public class Menu implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@JoinColumn(insertable = false, updatable = false)
+	@Column(name = "menu_id")
 	private int id;
 	
 	private String name;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
 	private List<Item> itemList;
+	
+	//@OneToOne(targetEntity = il.cshaifasweng.OCSFMediatorExample.entities.Branch.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "branch_id")
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name="branch_id")
+	private Branch branch;
+	
+	
 	
 	public Menu() 
 	{
@@ -43,6 +55,16 @@ public class Menu implements Serializable
 		super();
 		this.name = name;
 		this.itemList = new ArrayList<Item>();
+	}
+
+	public Branch getBranch() 
+	{
+		return branch;
+	}
+
+	public void setBranch(Branch branch) 
+	{
+		this.branch = branch;
 	}
 
 	public String getName() 
@@ -75,12 +97,15 @@ public class Menu implements Serializable
 		if(index >= 0 && index < itemList.size())
 			this.itemList.remove(index);
 	}
-	
+
 	@Override
-	public String toString() 
-	{
-		return "Menu [name=" + name + "]";
+	public String toString() {
+		return "Menu [id=" + id + ", name=" + name + ", itemList=" + itemList + ", branchName=" + branch.getName() + "]";
 	}
+
+	
+	
+	
 	
 	
 	

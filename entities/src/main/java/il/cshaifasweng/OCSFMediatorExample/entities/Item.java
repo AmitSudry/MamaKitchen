@@ -109,10 +109,11 @@ public class Item implements Serializable
 	}
 
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", type=" + type + ", price=" + price + "]";
 	}
+
+	
 	
 	
 }

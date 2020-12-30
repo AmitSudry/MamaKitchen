@@ -16,6 +16,19 @@
 <VBox alignment="CENTER" prefHeight="622.0" prefWidth="793.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.DeliveryController">
     <children>
         <Label prefHeight="52.0" prefWidth="96.0" text="DeliveryController" />
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+        </rowConstraints>
+         <children>
+            <ComboBox fx:id="BranchPick" onAction="#ApproveBranchChoise" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Label text="Choose Branch: " GridPane.halignment="CENTER" />
+         </children>
+      </GridPane>
       <ComboBox fx:id="ItemsPick" prefWidth="150.0" />
       <Button mnemonicParsing="false" onAction="#AddItemToCart" text="Add Item" />
       <TextArea fx:id="SelectedItems" editable="false" prefHeight="73.0" prefWidth="493.0" />

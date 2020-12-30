@@ -130,20 +130,20 @@ public class CustomerController implements Initializable
      
     
     @Subscribe
-    public void onWarningEvent(GetItemsEvent event) 
+    public void onWarningEvent(GetBranchesEvent event) 
     {
     	area.setText("");
-    	for(int i=0; i<event.getWarning().getItems().size(); i++)
+    	for(int i=0; i<event.getDetails().getBranches().size(); i++)
     	{	
-    		area.appendText(event.getWarning().getItems().get(i).toString() + "\n");
+    		area.appendText(event.getDetails().getBranches().get(i).toString() + "\n");
     	}
     	
     	updateChoise.getItems().clear();
         ObservableList<String> list = updateChoise.getItems();
         
-        for(int i=0; i<event.getWarning().getItems().size(); i++)
+        for(int i=0; i<event.getDetails().getBranches().size(); i++)
         {
-        	list.add(event.getWarning().getItems().get(i).getName());
+        	list.add(event.getDetails().getBranches().get(i).getName());
         }	
     }
     

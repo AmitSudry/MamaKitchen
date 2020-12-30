@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Branch;
 import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import javafx.collections.ObservableList;
@@ -27,6 +28,11 @@ public class DeliveryController implements Initializable
 	private Delivery cart;
 	
 	private List<Item> menuItems;
+	
+	private List<Branch> branchList;
+	
+	@FXML
+	private ComboBox<String> BranchPick;
 	
 	@FXML
     private ComboBox<String> ItemsPick;
@@ -68,6 +74,33 @@ public class DeliveryController implements Initializable
     private void SwitchToCustomerController() throws IOException 
     {
         App.setRoot("customer");
+    }
+    
+    @FXML
+    void ApproveBranchChoise(ActionEvent event) 
+    {
+    	if(BranchPick.getValue()==null)
+    		return;
+    	
+    	ItemsPick.getItems().clear();
+        ObservableList<String> list = ItemsPick.getItems();
+        
+        int branchIndex = -1;
+        for(int i=0; i<branchList.size(); i++)
+        {
+        	if(branchList.get(i).getName().equals(BranchPick.getValue().toString()))
+        	{
+        		branchIndex = i;
+        		break;
+        	}	
+        }	
+        
+        for(int i=0; i<branchList.get(branchIndex).getMenu().getItemList().size(); i++)
+        {
+        	list.add(branchList.get(branchIndex).getMenu().getItemList().get(i).getName());
+        }
+        
+        menuItems = branchList.get(branchIndex).getMenu().getItemList();
     }
 
     @FXML
@@ -154,17 +187,17 @@ public class DeliveryController implements Initializable
     }
     
     @Subscribe
-    public void onWarningEvent(GetItemsEvent event) 
+    public void onWarningEvent(GetBranchesEvent event) 
     {
-    	ItemsPick.getItems().clear();
-        ObservableList<String> list = ItemsPick.getItems();
+    	BranchPick.getItems().clear();
+        ObservableList<String> list = BranchPick.getItems();
         
-        for(int i=0; i<event.getWarning().getItems().size(); i++)
+        for(int i=0; i<event.getDetails().getBranches().size(); i++)
         {
-        	list.add(event.getWarning().getItems().get(i).getName());
+        	list.add(event.getDetails().getBranches().get(i).getName());
         }	
         
-        menuItems = event.getWarning().getItems();
+        branchList = event.getDetails().getBranches();
     }
     
 	@Override
