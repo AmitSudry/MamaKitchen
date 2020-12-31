@@ -41,6 +41,10 @@ public class SimpleServer extends AbstractServer
 	private List<Branch> branches;
 	private List<Employee> employees;
 	
+	private List<Delivery> activeDeliveries = new ArrayList<Delivery>();
+	private List<Complaint> activeComplaints = new ArrayList<Complaint>();
+	private List<Reservation> activeReservations = new ArrayList<Reservation>();
+	
 	/*
 	 * TODO entities: All types of workers, Branch and chain. 
 	 */
@@ -80,7 +84,7 @@ public class SimpleServer extends AbstractServer
 		session.flush();
 		
 		Menu menu1 = new Menu("RestMenu_Haifa");
-		Branch b1 = new Branch("Haifa");
+		Branch b1 = new Branch("Haifa", 1100, 1930);
 		
 		menu1.setBranch(b1);
 		b1.setMenu(menu1);
@@ -139,7 +143,7 @@ public class SimpleServer extends AbstractServer
     	session.flush();
     	
     	Menu menu2 = new Menu("RestMenu_jerusalem");
-		Branch b2 = new Branch("Jerusalem");
+		Branch b2 = new Branch("Jerusalem", 830, 2030);
 		
 		menu2.setBranch(b2);
 		b2.setMenu(menu2);
@@ -316,6 +320,7 @@ public class SimpleServer extends AbstractServer
 		System.out.println();
 		if (msg.getClass().equals(Delivery.class)) //getting the delivery info
 		{
+			activeDeliveries.add((Delivery) msg);
 			System.out.println("Recived the following delivery event:\n" + msgString);
 		}
 		else if (msg.getClass().equals(Login.class))  //getting the login info
@@ -343,10 +348,12 @@ public class SimpleServer extends AbstractServer
 		}
 		else if (msg.getClass().equals(Reservation.class)) //getting the reservation info
 		{
+			activeReservations.add((Reservation) msg);
 			System.out.println("Recived the following reservation event:\n" + msgString);
 		}
 		else if (msg.getClass().equals(Complaint.class)) //getting the complaint info
 		{
+			activeComplaints.add((Complaint) msg);
 			System.out.println("Recived the following reservation event:\n" + msgString);
 		}
 		else if (msgString.startsWith("#showMenu")) //receiving request to forward the branch list

@@ -31,7 +31,7 @@
       </GridPane>
       <ComboBox fx:id="ItemsPick" prefWidth="150.0" />
       <Button mnemonicParsing="false" onAction="#AddItemToCart" text="Add Item" />
-      <TextArea fx:id="SelectedItems" editable="false" prefHeight="73.0" prefWidth="493.0" />
+      <TextArea fx:id="SelectedItems" editable="false" prefHeight="112.0" prefWidth="753.0" />
       <GridPane prefHeight="233.0" prefWidth="691.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="648.0" minWidth="10.0" prefWidth="291.0" />
@@ -79,7 +79,7 @@
         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#ConfirmDelivery" text="Confirm Delivery" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-            <TextField fx:id="OrderStatus" editable="false" layoutX="65.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <TextField fx:id="OrderStatus" editable="false" layoutX="65.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="357.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <Label text="Order Status:" GridPane.halignment="CENTER" />
          </children>
       </GridPane>

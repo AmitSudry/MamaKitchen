@@ -26,6 +26,9 @@ public class ReservationController implements Initializable
 	
 	private List<Branch> branchList;
 	
+	private int openingHour;
+	private int closingHour;
+	
 	@FXML
     private TextField Phone;
 	
@@ -37,6 +40,9 @@ public class ReservationController implements Initializable
 
     @FXML
     private ComboBox<String> HourPick;
+    
+    @FXML
+    private ComboBox<String> MinutesPick;
 
     @FXML
     private TextField NumberOfPeople;
@@ -54,9 +60,60 @@ public class ReservationController implements Initializable
     void ApproveBranchChoise(ActionEvent event)
     {
     	HourPick.setValue(null);
-    	/*
-         * Need to set available hours according to the opening hours
-         */
+    	MinutesPick.setValue(null);
+    	
+    	if(BranchPick.getValue()==null)
+    		return;
+    	
+        int branchIndex = -1;
+        for(int i=0; i<branchList.size(); i++)
+        {
+        	if(branchList.get(i).getName().equals(BranchPick.getValue().toString()))
+        	{
+        		branchIndex = i;
+        		break;
+        	}	
+        }	
+        
+        HourPick.getItems().clear();
+        ObservableList<String> list2 = HourPick.getItems();
+        MinutesPick.getItems().clear();
+        ObservableList<String> list3 = MinutesPick.getItems();
+        
+        int open = branchList.get(branchIndex).getOpeningHour();
+        int close = branchList.get(branchIndex).getClosingHour();
+        
+        openingHour = open;
+        closingHour = close;
+        System.out.println("from " + openingHour + " to " + closingHour);
+        while(open <= close-100) //reservation could be made from opening hour to one hour before closing
+        {
+        	int hour = open/100;
+        	if(hour<10) 
+        	{
+        		if(!list2.contains("0" + hour))
+        			list2.add("0" + hour);
+        	}
+        	else
+        	{
+        		if(!list2.contains(String.valueOf(hour)))
+        			list2.add(String.valueOf(hour));
+        	}
+
+        	open += 100; 	
+        }
+        
+        for(int i=0; i<60; i+=15)
+        {
+        	if(i<10) 
+        	{
+        		list3.add("0" + i);
+        	}
+        	else
+        	{
+        		list3.add(String.valueOf(i));
+        	}
+        }
     }
     
     @FXML
@@ -64,10 +121,44 @@ public class ReservationController implements Initializable
     {
     	if(Phone.getText().equals("") || Name.getText().equals("")
     			|| NumberOfPeople.getText().equals("") || DiningPick.getValue()==null
-    			|| HourPick.getValue()==null || BranchPick.getValue()==null
-    			|| Date.getValue()==null)
+    			|| HourPick.getValue()==null || MinutesPick.getValue()==null 
+    			|| BranchPick.getValue()==null || Date.getValue()==null)
+    			
     	{
     		ReservationStatus.setText("You're missing fields!");
+    		return;
+    	}
+    	
+    	int requestedHour = Integer.parseInt(HourPick.getValue().toString())*100 + Integer.parseInt(MinutesPick.getValue().toString());
+    	
+    	if(requestedHour < openingHour || requestedHour > closingHour-100) //wrong hour
+    	{
+    		String from = "", to = "";
+    		int hour = openingHour/100;
+        	if(hour<10) 
+        		from += "0" + hour;
+        	else
+        		from += String.valueOf(hour);
+        	from += ":";
+        	int minutes = openingHour%100;
+        	if(minutes<10) 
+        		from += "0" + minutes;
+        	else
+        		from += String.valueOf(minutes);
+        	
+        	hour = (closingHour-100)/100; //one hour before closing
+        	if(hour<10) 
+        		to += "0" + hour;
+        	else
+        		to += String.valueOf(hour);
+        	to += ":";
+        	minutes = closingHour%100;
+        	if(minutes<10) 
+        		to += "0" + minutes;
+        	else
+        		to += String.valueOf(minutes);
+        	
+        	ReservationStatus.setText("You can book a table from " + from + " to " + to);
     		return;
     	}
     	
@@ -150,15 +241,5 @@ public class ReservationController implements Initializable
         
         list.add("Inside");
         list.add("Outside");
-        
-        HourPick.getItems().clear();
-        ObservableList<String> list2 = HourPick.getItems();
-        
-        list2.add("1000");
-        list2.add("1015");
-        list2.add("1030");
-        list2.add("1045");
-        list2.add("1100");
-        list2.add("1115");
 	}
 }

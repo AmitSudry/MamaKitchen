@@ -34,20 +34,25 @@ public class Branch implements Serializable
 	
 	private String name;
 	
+	private int openingHour; // 815 - 08:15, 1145 - 11:45
+	private int closingHour; //Same deal
+	
 	//@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_id")
 	@OneToOne(mappedBy = "branch")
-	private Menu menu2;
+	private Menu menu;
 	
 	public Branch() 
 	{
 		super();
 	}
 	
-	public Branch(String name) 
+	public Branch(String name, int openingHour, int closingHour) 
 	{
 		super();
 		this.name = name;
+		this.openingHour = openingHour;
+		this.closingHour = closingHour;
 	}
 
 	public String getName() {
@@ -59,17 +64,32 @@ public class Branch implements Serializable
 	}
 
 	public Menu getMenu() {
-		return menu2;
+		return menu;
 	}
 
 	public void setMenu(Menu menu) {
-		this.menu2 = menu;
+		this.menu = menu;
+	}
+
+	public int getOpeningHour() {
+		return openingHour;
+	}
+
+	public void setOpeningHour(int openingHour) {
+		this.openingHour = openingHour;
+	}
+
+	public int getClosingHour() {
+		return closingHour;
+	}
+
+	public void setClosingHour(int closingHour) {
+		this.closingHour = closingHour;
 	}
 
 	@Override
 	public String toString() {
-		return "Branch [id=" + id + ", name=" + name + ", menuName=" + menu2.getName() + "]";
+		return "Branch [id=" + id + ", name=" + name + ", openingHour=" + openingHour + ", closingHour=" + closingHour
+				+ ", menuName=" + menu.getName() + "]";
 	}
-
-	
 }

@@ -31,6 +31,9 @@ public class DeliveryController implements Initializable
 	
 	private List<Branch> branchList;
 	
+	private int openingHour;
+	private int closingHour;
+	
 	@FXML
 	private ComboBox<String> BranchPick;
 	
@@ -101,15 +104,53 @@ public class DeliveryController implements Initializable
         }
         
         menuItems = branchList.get(branchIndex).getMenu().getItemList();
+        
+        HourPick.getItems().clear();
+        ObservableList<String> list2 = HourPick.getItems();
+        MinutesPick.getItems().clear();
+        ObservableList<String> list3 = MinutesPick.getItems();
+        
+        int open = branchList.get(branchIndex).getOpeningHour();
+        int close = branchList.get(branchIndex).getClosingHour();
+        
+        openingHour = open;
+        closingHour = close;
+        while(open <= close)
+        {
+        	int hour = open/100;
+        	if(hour<10) // something like 855 yields that the hour should be 08 and not 8
+        	{
+        		if(!list2.contains("0" + hour))
+        			list2.add("0" + hour);
+        	}
+        	else
+        	{
+        		if(!list2.contains(String.valueOf(hour)))
+        			list2.add(String.valueOf(hour));
+        	}
+
+        	open += 100; //delivery only every 30 minutes 	
+        }
+        
+        for(int i=0; i<60; i++)
+        {
+        	if(i<10) // something like 1305 yields that the minute should be 05 and not 5
+        	{
+        		list3.add("0" + i);
+        	}
+        	else
+        	{
+        		list3.add(String.valueOf(i));
+        	}
+        }
     }
 
     @FXML
     void ConfirmDelivery(ActionEvent event) 
     {
-    	
     	if(cart.getItemsList().size()==0)
     	{
-    		OrderStatus.setText("Order Status: Your cart is empty!");
+    		OrderStatus.setText("Your cart is empty!");
     		return;
     	}
     	
@@ -118,9 +159,43 @@ public class DeliveryController implements Initializable
     			|| HourPick.getValue()==null || PaymentPick.getValue()==null
     			|| MinutesPick.getValue()==null || TAOrDeliveryPick.getValue() == null)
     	{
-    		OrderStatus.setText("Order Status: You are missing fields!");
+    		OrderStatus.setText("You are missing fields!");
     		return;
     	}
+    	
+    	int requestedHour = Integer.parseInt(HourPick.getValue().toString())*100 + Integer.parseInt(MinutesPick.getValue().toString());
+    	
+    	if(requestedHour < openingHour || requestedHour > closingHour) //wrong hour
+    	{
+    		String from = "", to = "";
+    		int hour = openingHour/100;
+        	if(hour<10) 
+        		from += "0" + hour;
+        	else
+        		from += String.valueOf(hour);
+        	from += ":";
+        	int minutes = openingHour%100;
+        	if(minutes<10) 
+        		from += "0" + minutes;
+        	else
+        		from += String.valueOf(minutes);
+        	
+        	hour = closingHour/100;
+        	if(hour<10) 
+        		to += "0" + hour;
+        	else
+        		to += String.valueOf(hour);
+        	to += ":";
+        	minutes = closingHour%100;
+        	if(minutes<10) 
+        		to += "0" + minutes;
+        	else
+        		to += String.valueOf(minutes);
+        	
+    		OrderStatus.setText("Branch is open from " + from + " to " + to);
+    		return;
+    	}
+    	
     	cart.setAddress(Address.getText());
     	cart.setName(Name.getText());
     	cart.setPhoneNumber(Phone.getText());
@@ -130,9 +205,17 @@ public class DeliveryController implements Initializable
     	boolean isCredit = PaymentPick.getValue().toString().equals("Credit") ? true : false;
     	cart.setCreditCard(isCredit);
     	cart.setDate(DatePick.getValue().toString());
-    	cart.setTotal(Double.parseDouble(Total.getText()));
+    	double total = Double.parseDouble(Total.getText());
     	
     	OrderStatus.setText("Your order has been accepted!");
+    	if(!isTA)
+    	{
+    		total += 15.0; //deliveryFee
+    		OrderStatus.appendText(" Delivery fee included(15.0)!");
+    	}
+    	cart.setTotal(total);
+    	
+    	
     	Address.setText("");
     	Name.setText("");
     	Phone.setText("");
@@ -231,25 +314,5 @@ public class DeliveryController implements Initializable
         
         list1.add("TakeAway");
         list1.add("Delivery");
-        
-        HourPick.getItems().clear();
-        ObservableList<String> list2 = HourPick.getItems();
-        
-        list2.add("08");
-        list2.add("09");
-        list2.add("10");
-        list2.add("11");
-        list2.add("12");
-        list2.add("13");
-        list2.add("14");
-        list2.add("15");
-        
-        MinutesPick.getItems().clear();
-        ObservableList<String> list3 = MinutesPick.getItems();
-        
-        list3.add("00");
-        list3.add("15");
-        list3.add("30");
-        list3.add("45");
 	}
 }
