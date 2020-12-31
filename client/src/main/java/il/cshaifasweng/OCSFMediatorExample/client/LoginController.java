@@ -64,31 +64,29 @@ public class LoginController implements Initializable
     @Subscribe
     public void onEmployeeEvent(Employee event) throws IOException 
     {
+    	if(event.getType()==-1)
+    	{
+    		loginStatus.setText("Incorrect username and/or password!");
+    		return;
+    	}
+    	
     	if(!forwardedEmployee) 
     	{
     		forwardedEmployee = true;
     		
-    		if(event.getType()==-1)
+    	   	App.setRoot("employeeMain");
+    	   	//then forward the employee to the "EmployeeMainController"
+    	   	Login l = new Login(event.getUserName(), event.getPassword());
+    	   	try 
         	{
-        		loginStatus.setText("Incorrect username and/or password!");
-        	}
-        	else
+            	SimpleClient.getClient().sendToServer(l);
+    		} 
+        	catch (IOException e) 
         	{
-        	   	App.setRoot("employeeMain");
-        	   	//then forward the employee to the "EmployeeMainController"
-        	   	Login l = new Login(event.getUserName(), event.getPassword());
-        	   	try 
-            	{
-                	SimpleClient.getClient().sendToServer(l);
-        		} 
-            	catch (IOException e) 
-            	{
-        			// TODO Auto-generated catch block
-        			e.printStackTrace();
-        		}
-        	}
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     	}
-    	
     }
     
 	@Override

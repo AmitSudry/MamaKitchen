@@ -273,28 +273,83 @@ public class SimpleServer extends AbstractServer
 		}
 	}
 	
-	private void updateItem(String itemToUpdate, String newPrice, String newType)
+	private void updateItem(String itemToUpdate, String newPrice, String newType, String branchName)
 	{
-		int index = -1;
+		int target = -1;
+		
+		for (int i=0; i<branches.size(); i++) 
+    	{
+    		if(branches.get(i).getName().equals(branchName))
+    		{
+    			target = i;
+    			break;
+    		}
+    	}
+		
+		if(target == -1)
 		{
-			for(int i=0; i<items.size(); i++)
+			System.out.println("Invalid branch name in update item");
+			return;
+		}
+			
+		
+		int index = -1;
+		for(int i=0; i<branches.get(target).getMenu().getItemList().size(); i++)
+		{
+			if(branches.get(target).getMenu().getItemList().get(i).getName().equals(itemToUpdate)) //Found target item to update
 			{
-				if(items.get(i).getName().equals(itemToUpdate)) //Found target item to update
-				{
-					index = i;
-					break;
-				}
+				index = i;
+				break;
+			}
+		}
+
+		
+		if(index != -1)
+		{
+			//System.out.println(branches.get(target).getMenu().getItemList().get(index).getName() + " " + branches.get(target).getName());
+			branches.get(target).getMenu().getItemList().get(index).setPrice(Double.parseDouble(newPrice));
+			branches.get(target).getMenu().getItemList().get(index).setType(newType);
+		}	
+	}
+	
+	private void removeItem(String itemToRemove, String branchName)
+	{
+		int target = -1;
+		
+		for (int i=0; i<branches.size(); i++) 
+    	{
+    		if(branches.get(i).getName().equals(branchName))
+    		{
+    			target = i;
+    			break;
+    		}
+    	}
+		
+		if(target == -1)
+		{
+			System.out.println("Invalid branch name in update item");
+			return;
+		}
+			
+		int index = -1;
+		for(int i=0; i<branches.get(target).getMenu().getItemList().size(); i++)
+		{
+			if(branches.get(target).getMenu().getItemList().get(i).getName().equals(itemToRemove)) //Found target item to update
+			{
+				index = i;
+				break;
 			}
 		}
 		
 		if(index != -1)
 		{
-			items.get(index).setPrice(Double.parseDouble(newPrice));
-			items.get(index).setType(newType);
+			//System.out.println(branches.get(target).getMenu().getItemList().get(index).getName() + " " + branches.get(target).getName());
+			branches.get(target).getMenu().getItemList().remove(index);
 		}	
 	}
 	
 	private Employee isEmployee(String username, String password)
+
 	{
 		for (Employee employee: employees) 
     	{
@@ -372,26 +427,24 @@ public class SimpleServer extends AbstractServer
 		else if (msgString.startsWith("#updateItem")) //receiving request to update an item
 		{
 			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
-			updateItem(tokens[1], tokens[2], tokens[3]);
+			/*
+			for(int i=0; i<tokens.length; i++)
+			{
+				System.out.println("token " +i+" is:" + tokens[i]);
+			}
+			*/
+			updateItem(tokens[1], tokens[2], tokens[3], tokens[4]);
 		}
 		else if(msgString.startsWith("#removeItem")) //receiving request to remove an item
 		{
 			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
-			int index = -1;
+			/*
+			for(int i=0; i<tokens.length; i++)
 			{
-				for(int i=0; i<items.size(); i++)
-				{
-					if(items.get(i).getName().equals(tokens[1])) //Found target item to remove
-					{
-						index = i;
-						break;
-					}
-				}
+				System.out.println("token " +i+" is:" + tokens[i]);
 			}
-			if(index != -1)
-				items.remove(index);
+			*/
+			removeItem(tokens[1], tokens[2]);
 		}
-
 	}
-
 }

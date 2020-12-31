@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 
 public class EmployeeMainController implements Initializable 
 {
-	private Employee employee;
+	private static Employee employee;
 	
 	@FXML
 	private Label EmployeeGreeting;
@@ -38,7 +38,7 @@ public class EmployeeMainController implements Initializable
 	
 	
 	@FXML
-	void SwitchToUpdateItemController(ActionEvent event) 
+	void SwitchToUpdateItemController(ActionEvent event) throws IOException 
 	{
 		if(employee==null)
 			return;
@@ -49,7 +49,7 @@ public class EmployeeMainController implements Initializable
 			return;
 		}
 		
-		//App.setRoot("updateItem");
+		App.setRoot("updateItem");
 	}
 	
 	@FXML
