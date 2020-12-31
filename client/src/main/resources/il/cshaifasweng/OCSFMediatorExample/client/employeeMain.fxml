@@ -12,6 +12,7 @@
 <VBox alignment="CENTER" prefHeight="646.0" prefWidth="823.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.EmployeeMainController">
    <children>
       <Label prefHeight="46.0" prefWidth="132.0" text="EmployeeMainController" />
+      <Label fx:id="EmployeeGreeting" text="Employee Name:" />
       <GridPane alignment="CENTER" layoutX="30.0" layoutY="394.0" prefHeight="247.0" prefWidth="645.0">
          <columnConstraints>
             <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -41,10 +42,9 @@
         </rowConstraints>
          <children>
             <Label text="Action Status:" GridPane.halignment="CENTER" />
-            <TextField fx:id="ActionStatus" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="289.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <TextField fx:id="ActionStatus" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <Button layoutX="381.0" layoutY="611.0" mnemonicParsing="false" onAction="#SwitchToLoginController" text="Go Back" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

@@ -18,7 +18,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Login;
 
 public class LoginController implements Initializable 
 {
-	private static boolean forwardedEmployee = false;
+	private boolean forwardedEmployee = false;
 	
 	@FXML
 	private TextField loginStatus;
