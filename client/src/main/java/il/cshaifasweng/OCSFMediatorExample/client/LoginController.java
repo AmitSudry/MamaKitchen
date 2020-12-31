@@ -13,11 +13,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.Login;
 
 public class LoginController implements Initializable 
 {
+	private static boolean forwardedEmployee = false;
+	
 	@FXML
 	private TextField loginStatus;
 	 
@@ -56,13 +58,37 @@ public class LoginController implements Initializable
 			e.printStackTrace();
 		}
     	
-    	App.setRoot("employeeMain");
+    	//App.setRoot("employeeMain");
     }
     
     @Subscribe
-    public void onLoginEvent(LoginEvent event) 
+    public void onEmployeeEvent(Employee event) throws IOException 
     {
-    
+    	if(!forwardedEmployee) 
+    	{
+    		forwardedEmployee = true;
+    		
+    		if(event.getType()==-1)
+        	{
+        		loginStatus.setText("Incorrect username and/or password!");
+        	}
+        	else
+        	{
+        	   	App.setRoot("employeeMain");
+        	   	//then forward the employee to the "EmployeeMainController"
+        	   	Login l = new Login(event.getUserName(), event.getPassword());
+        	   	try 
+            	{
+                	SimpleClient.getClient().sendToServer(l);
+        		} 
+            	catch (IOException e) 
+            	{
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
+    	}
+    	
     }
     
 	@Override

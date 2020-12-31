@@ -7,6 +7,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
+import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
 
 public class SimpleClient extends AbstractClient 
@@ -22,7 +23,11 @@ public class SimpleClient extends AbstractClient
 	@Override
 	protected void handleMessageFromServer(Object msg) 
 	{
-		if (msg.getClass().equals(GetBranches.class)) 
+		if(msg.getClass().equals(Employee.class))
+		{
+			EventBus.getDefault().post((Employee) msg);
+		}
+		else if (msg.getClass().equals(GetBranches.class)) 
 		{
 			EventBus.getDefault().post(new GetBranchesEvent((GetBranches) msg));
 		}

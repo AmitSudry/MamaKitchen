@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
+import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Login;
@@ -38,6 +39,7 @@ public class SimpleServer extends AbstractServer
 	private static Session session;
 	private List<Item> items;
 	private List<Branch> branches;
+	private List<Employee> employees;
 	
 	/*
 	 * TODO entities: All types of workers, Branch and chain. 
@@ -49,6 +51,7 @@ public class SimpleServer extends AbstractServer
 		configuration.addAnnotatedClass(Item.class);
 		configuration.addAnnotatedClass(Menu.class);
 		configuration.addAnnotatedClass(Branch.class);
+		configuration.addAnnotatedClass(Employee.class);
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
@@ -59,6 +62,23 @@ public class SimpleServer extends AbstractServer
 	
 	private static void initializeData() throws Exception 
 	{
+		//0-regular employee, 1-hostess, 2-dietitian, 3-customer service, 4-branch manager, 5-chain manager
+		Employee e1 = new Employee("amit1", "amit123", "Haifa", 0);
+		Employee e2 = new Employee("amit2", "amit123456", "Jerusalem", 1);
+		Employee e3 = new Employee("amit3", "123456789", "Haifa", 2);
+		Employee e4 = new Employee("amit4", "2468", "Haifa", 3);
+		Employee e5 = new Employee("amit5", "hello123", "Haifa", 4);
+		Employee e6 = new Employee("amit6", "hi2468", "Jerusalem", 5);
+
+		session.save(e1);
+		session.save(e2);
+		session.save(e3);
+		session.save(e4);
+		session.save(e5);
+		session.save(e6);
+		
+		session.flush();
+		
 		Menu menu1 = new Menu("RestMenu_Haifa");
 		Branch b1 = new Branch("Haifa");
 		
@@ -205,6 +225,7 @@ public class SimpleServer extends AbstractServer
         	
         	this.items = getAll(Item.class);   	
         	this.branches = getAll(Branch.class);
+        	this.employees = getAll(Employee.class);
         	
         	System.out.println("\nItem list:\n");
 
@@ -218,6 +239,13 @@ public class SimpleServer extends AbstractServer
         	for (Branch branch: branches) 
         	{
         		System.out.println(branch);       		
+        	}
+        	
+        	System.out.println("\nEmployees list:\n");
+
+        	for (Employee employee: employees) 
+        	{
+        		System.out.println(employee);       		
         	}
         	
         	System.out.println("\nDone!");
@@ -262,6 +290,17 @@ public class SimpleServer extends AbstractServer
 		}	
 	}
 	
+	private Employee isEmployee(String username, String password)
+	{
+		for (Employee employee: employees) 
+    	{
+    		if(employee.getUserName().equals(username) && employee.getPassword().equals(password))
+    			return new Employee(employee.getUserName(),employee.getPassword(),
+    					employee.getBranchName(), employee.getType());
+    	}
+		
+		return null;
+	}
 	public SimpleServer(int port) 
 	{
 		super(port);	
@@ -275,23 +314,42 @@ public class SimpleServer extends AbstractServer
 		List<Branch> branchesList = new ArrayList<Branch>(this.branches);
 		
 		System.out.println();
-		if (msg.getClass().equals(Delivery.class)) 
+		if (msg.getClass().equals(Delivery.class)) //getting the delivery info
 		{
 			System.out.println("Recived the following delivery event:\n" + msgString);
 		}
-		else if (msg.getClass().equals(Login.class)) 
+		else if (msg.getClass().equals(Login.class))  //getting the login info
 		{
 			System.out.println("Recived the following login event:\n" + msgString);
+
+			Login l = (Login)msg;
+			Employee e = isEmployee(l.getUsername(), l.getPassword());
+			try 
+			{
+				if(e != null)
+				{
+					client.sendToClient(e);
+				}
+				else
+				{
+					client.sendToClient(new Employee("", "", "", -1));
+
+				}
+			} 
+			catch (IOException exc) 
+			{
+				exc.printStackTrace();
+			}			
 		}
-		else if (msg.getClass().equals(Reservation.class)) 
+		else if (msg.getClass().equals(Reservation.class)) //getting the reservation info
 		{
 			System.out.println("Recived the following reservation event:\n" + msgString);
 		}
-		else if (msg.getClass().equals(Complaint.class)) 
+		else if (msg.getClass().equals(Complaint.class)) //getting the complaint info
 		{
 			System.out.println("Recived the following reservation event:\n" + msgString);
 		}
-		else if (msgString.startsWith("#showMenu")) 
+		else if (msgString.startsWith("#showMenu")) //receiving request to forward the branch list
 		{
 			GetBranches warning = new GetBranches("Warning from server!", branchesList);
 			try 
@@ -304,12 +362,12 @@ public class SimpleServer extends AbstractServer
 				e.printStackTrace();
 			}
 		}
-		else if (msgString.startsWith("#updateItem"))
+		else if (msgString.startsWith("#updateItem")) //receiving request to update an item
 		{
 			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
 			updateItem(tokens[1], tokens[2], tokens[3]);
 		}
-		else if(msgString.startsWith("#removeItem"))
+		else if(msgString.startsWith("#removeItem")) //receiving request to remove an item
 		{
 			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
 			int index = -1;

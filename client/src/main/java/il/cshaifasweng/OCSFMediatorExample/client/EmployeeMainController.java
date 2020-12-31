@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextField;
 
 public class EmployeeMainController implements Initializable 
 {
+	private Employee employee;
 	
 	@FXML
 	private TextField ActionStatus; //check for employee permissions
@@ -31,7 +33,7 @@ public class EmployeeMainController implements Initializable
 	@FXML
 	void SwitchToBranchOccupationController(ActionEvent event) 
 	{
-	
+		System.out.println(employee);
 	}
 	
 	
@@ -60,9 +62,9 @@ public class EmployeeMainController implements Initializable
 	}
 	
     @Subscribe
-    public void onWarningEvent(GetBranchesEvent event) 
+    public void onEmployeeEvent(Employee event) //receives this event at one with "LoginController"
     {
-    	
+    	this.employee = event;
     }
     
 	@Override
@@ -71,7 +73,7 @@ public class EmployeeMainController implements Initializable
 		// TODO Auto-generated method stub
 		EventBus.getDefault().register(this);
 		
-		
+		/*
 		try //Gather the menu info from the server 
     	{
 			SimpleClient.getClient().sendToServer("#showMenu");
@@ -81,5 +83,6 @@ public class EmployeeMainController implements Initializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 }
