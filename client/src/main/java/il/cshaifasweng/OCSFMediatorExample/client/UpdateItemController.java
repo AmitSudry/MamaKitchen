@@ -26,7 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 
-public class updateItemController implements Initializable 
+public class UpdateItemController implements Initializable 
 {
 	private List<Branch> branchList;
 	

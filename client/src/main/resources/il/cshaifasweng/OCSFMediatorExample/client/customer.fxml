@@ -2,11 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -33,27 +30,6 @@
          </children>
       </GridPane>
       <TextArea fx:id="area" editable="false" prefHeight="200.0" prefWidth="200.0" />
-      <ComboBox fx:id="updateChoise" prefWidth="150.0" />
-      <GridPane prefHeight="159.0" prefWidth="783.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="323.0" minWidth="10.0" prefWidth="323.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="322.0" minWidth="10.0" prefWidth="322.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <TextField fx:id="typeText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <CheckBox fx:id="removeBool" mnemonicParsing="false" text="yes/no" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="New Price:" />
-            <Label text="New Type:" GridPane.rowIndex="1" />
-            <Label text="Remove Item?" GridPane.rowIndex="2" />
-            <TextField fx:id="priceText" prefHeight="54.0" prefWidth="320.0" GridPane.columnIndex="1" />
-         </children>
-      </GridPane>
-      <Button fx:id="updateItem" mnemonicParsing="false" onAction="#UpdateItem" text="Update Item" />
       <Button fx:id="GoBack" layoutX="381.0" layoutY="611.0" mnemonicParsing="false" onAction="#SwitchToLoginController" text="Go Back" />
    </children>
    <padding>

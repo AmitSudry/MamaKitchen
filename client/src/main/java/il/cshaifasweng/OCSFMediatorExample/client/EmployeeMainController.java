@@ -68,18 +68,18 @@ public class EmployeeMainController implements Initializable
 	}
 	
 	@FXML
-	void SwitchToViewComplaintsController(ActionEvent event) 
+	void SwitchToViewComplaintsController(ActionEvent event) throws IOException 
 	{
 		if(employee==null)
 			return;
 		
-		if(employee.getType()!=5) //not the chain manager
+		if(employee.getType()!=3) //if you're not a customer service employee
 		{
 			ActionStatus.setText("You are not authorized for this action!");
 			return;
 		}
 		
-		//App.setRoot("viewReports");
+		App.setRoot("viewComplaints");
 	}
 	
 	@FXML
@@ -109,17 +109,5 @@ public class EmployeeMainController implements Initializable
 	{
 		// TODO Auto-generated method stub
 		EventBus.getDefault().register(this);
-		
-		/*
-		try //Gather the menu info from the server 
-    	{
-			SimpleClient.getClient().sendToServer("#showMenu");
-		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 	}
 }

@@ -26,29 +26,12 @@ import javafx.scene.input.MouseEvent;
 
 public class CustomerController implements Initializable 
 {
-	@FXML
-    private Button PreviewMenu;
 
-    @FXML
-    private Button OrderDelivery;
-
-    @FXML
-    private Button BookTable;
-
-    @FXML
-    private Button NoReservation;
-
-    @FXML
-    private Button Complaint;
-    
 	@FXML
     private ComboBox<String> updateChoise;
 	 
 	@FXML
 	private TextArea area;
-	
-	@FXML
-	private Button updateItem;
 	
 	@FXML
 	private TextField typeText;
@@ -58,9 +41,6 @@ public class CustomerController implements Initializable
 	
 	@FXML
 	private TextField priceText;
-	
-	@FXML
-    private Button GoBack;
 	
 	@FXML
 	void SwitchToLoginController() throws IOException
@@ -90,71 +70,17 @@ public class CustomerController implements Initializable
     void SwitchToReservationController() throws IOException
     {
     	App.setRoot("reservation");
-    }
-    
-	@FXML
-    void UpdateItem(ActionEvent event) throws IOException 
-	{
-		if(removeBool.isSelected())
-		{
-			SimpleClient.getClient().sendToServer("#removeItem " + updateChoise.getValue().toString());
-		}
-		else
-		{
-			SimpleClient.getClient().sendToServer("#updateItem "  
-					+ updateChoise.getValue().toString() + " "
-					+ priceText.getText() + " " 
-					+ typeText.getText());
-		}
-		
-		priceText.setText("");
-		typeText.setText("");
-		removeBool.setSelected(false);
-		
-		sendShowMenu(event);
-    }
-	
-    @FXML
-    void sendShowMenu(ActionEvent event) 
-    {
-    	try 
-    	{
-			SimpleClient.getClient().sendToServer("#showMenu");
-		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-     
+    }   
     
     @Subscribe
     public void onWarningEvent(GetBranchesEvent event) 
     {
-    	area.setText("");
-    	for(int i=0; i<event.getDetails().getBranches().size(); i++)
-    	{	
-    		area.appendText(event.getDetails().getBranches().get(i).toString() + "\n");
-    	}
-    	
-    	updateChoise.getItems().clear();
-        ObservableList<String> list = updateChoise.getItems();
-        
-        for(int i=0; i<event.getDetails().getBranches().size(); i++)
-        {
-        	list.add(event.getDetails().getBranches().get(i).getName());
-        }	
+
     }
     
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		EventBus.getDefault().register(this);
 	}
-    
-    
-
-
 }

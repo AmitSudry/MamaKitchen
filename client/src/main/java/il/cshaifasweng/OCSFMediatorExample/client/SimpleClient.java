@@ -9,6 +9,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
 
 public class SimpleClient extends AbstractClient 
 {
@@ -30,6 +31,10 @@ public class SimpleClient extends AbstractClient
 		else if (msg.getClass().equals(GetBranches.class)) 
 		{
 			EventBus.getDefault().post(new GetBranchesEvent((GetBranches) msg));
+		}
+		else if (msg.getClass().equals(GetReports.class)) 
+		{
+			EventBus.getDefault().post((GetReports) msg);
 		}
 	}
 	

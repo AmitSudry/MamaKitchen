@@ -28,6 +28,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Login;
 import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
@@ -349,7 +350,6 @@ public class SimpleServer extends AbstractServer
 	}
 	
 	private Employee isEmployee(String username, String password)
-
 	{
 		for (Employee employee: employees) 
     	{
@@ -360,6 +360,7 @@ public class SimpleServer extends AbstractServer
 		
 		return null;
 	}
+	
 	public SimpleServer(int port) 
 	{
 		super(port);	
@@ -373,6 +374,7 @@ public class SimpleServer extends AbstractServer
 		List<Branch> branchesList = new ArrayList<Branch>(this.branches);
 		
 		System.out.println();
+		
 		if (msg.getClass().equals(Delivery.class)) //getting the delivery info
 		{
 			activeDeliveries.add((Delivery) msg);
@@ -410,6 +412,25 @@ public class SimpleServer extends AbstractServer
 		{
 			activeComplaints.add((Complaint) msg);
 			System.out.println("Recived the following reservation event:\n" + msgString);
+		}
+		else if (msgString.startsWith("#reports"))
+		{
+			System.out.println("im here!");
+			List<Complaint> complaints = new ArrayList<Complaint>(this.activeComplaints);
+			for(int i=0; i<complaints.size(); i++)
+			{
+				System.out.println(complaints.get(i).toString());
+			}
+			GetReports t = new GetReports("Hello there!", complaints);
+			try 
+			{
+				client.sendToClient(t);
+				System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 		else if (msgString.startsWith("#showMenu")) //receiving request to forward the branch list
 		{
