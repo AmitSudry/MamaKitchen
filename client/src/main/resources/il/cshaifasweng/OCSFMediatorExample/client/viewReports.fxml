@@ -13,7 +13,7 @@
 
 <VBox alignment="CENTER" prefHeight="689.0" prefWidth="823.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ViewReportsController">
    <children>
-      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="143.0" text="ViewComplaintsController" />
+      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="124.0" text="ViewReportsController" />
       <GridPane>
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,7 +27,7 @@
             <ComboBox fx:id="ComplaintPick" onAction="#ApproveBranchChoise" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <TextArea fx:id="area" editable="false" prefHeight="200.0" prefWidth="200.0" text="Here, the complaint should be displayed..." />
+      <TextArea fx:id="area" editable="false" prefHeight="200.0" prefWidth="200.0" text="HERE THE REPORTS SHOULD BE MANAGED!" />
       <Button mnemonicParsing="false" onAction="#ShowComplaint" text="Display Complaint" />
       <GridPane prefHeight="75.0" prefWidth="783.0">
         <columnConstraints>

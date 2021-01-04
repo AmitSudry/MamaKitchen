@@ -28,12 +28,12 @@ public class EmployeeMainController implements Initializable
 	private TextField ActionStatus; //check for employee permissions
 	
 	@FXML
-	void SwitchToBranchOccupationController(ActionEvent event) 
+	void SwitchToBranchOccupationController(ActionEvent event) throws IOException 
 	{
 		if(employee==null)
 			return;
 				
-		//App.setRoot("occupation");
+		App.setRoot("viewOccupation");
 	}
 	
 	
