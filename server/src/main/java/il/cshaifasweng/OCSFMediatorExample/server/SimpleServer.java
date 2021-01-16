@@ -313,6 +313,11 @@ public class SimpleServer extends AbstractServer
 		}	
 	}
 	
+	private void addItem(Menu menu, Item item) {
+		menu.addItem(item);
+		menu.getItemList().get(menu.getItemList().size() - 1).setId(menu.getItemList().size());
+	}
+	
 	private void removeItem(String itemToRemove, String branchName)
 	{
 		int target = -1;
@@ -445,7 +450,7 @@ public class SimpleServer extends AbstractServer
 				e.printStackTrace();
 			}
 		}
-		else if (msgString.startsWith("#updateItem")) //receiving request to update an item
+		else if (msgString.startsWith("#updateItem")) //receiving requests to update an item
 		{
 			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
 			/*
@@ -455,6 +460,25 @@ public class SimpleServer extends AbstractServer
 			}
 			*/
 			updateItem(tokens[1], tokens[2], tokens[3], tokens[4]);
+		}
+		else if (msgString.startsWith("#addItem")) //receiving requests to update an item
+		{
+			String[] tokens = msgString.split("\\s+"); //Original expression splitted into tokens
+			/*
+			for(int i=0; i<tokens.length; i++)
+			{
+				System.out.println("token " +i+" is:" + tokens[i]);
+			}
+			*/
+			Menu menu = branchesList.get(Integer.parseInt(tokens[4])).getMenu();
+			
+			System.out.println(menu.getName());
+
+			//Item item = new Item(tokens[1], tokens[2], Float.parseFloat(tokens[3]), menu);
+			Item item = new Item("aa", "aa", 101, menu);
+			
+			addItem(menu, item);
+						
 		}
 		else if(msgString.startsWith("#removeItem")) //receiving request to remove an item
 		{

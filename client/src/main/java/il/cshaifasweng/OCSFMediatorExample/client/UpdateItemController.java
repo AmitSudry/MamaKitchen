@@ -38,7 +38,10 @@ public class UpdateItemController implements Initializable
 
     @FXML
     private ComboBox<String> ItemPick;
-
+    
+    @FXML 
+    private TextField nameText;
+    
     @FXML
     private TextField typeText;
 
@@ -71,10 +74,13 @@ public class UpdateItemController implements Initializable
         		branchIndex = i;
         		break;
         	}	
-        }	
+        }
+        
        
         ItemPick.getItems().clear();
         ObservableList<String> list = ItemPick.getItems();
+        
+        list.add("add new item");
         
     	area.setText("");
     	for(int i=0; i<branchList.get(branchIndex).getMenu().getItemList().size(); i++)
@@ -105,7 +111,7 @@ public class UpdateItemController implements Initializable
 			{
 				try 
 		    	{
-		    		Integer.parseInt(priceText.getText());
+		    		Float.parseFloat(priceText.getText());
 		        } 
 		    	catch (final NumberFormatException e) 
 		    	{
@@ -113,14 +119,22 @@ public class UpdateItemController implements Initializable
 		    		return;
 		        }
 			}
-			
-			SimpleClient.getClient().sendToServer("#updateItem "  
-					+ ItemPick.getValue().toString() + " "
-					+ priceText.getText() + " " 
-					+ typeText.getText() + " " 
-					+ BranchPick.getValue().toString());
+			if("add new item" == ItemPick.getValue().toString()) {
+				SimpleClient.getClient().sendToServer("#addItem "  
+						+ nameText.getText() + " "
+						+ typeText.getText() + " " 
+						+ priceText.getText() + " " 
+						+ BranchPick.getValue().toString());
+			} else {
+				SimpleClient.getClient().sendToServer("#updateItem "  
+						+ ItemPick.getValue().toString() + " "
+						+ priceText.getText() + " " 
+						+ typeText.getText() + " " 
+						+ BranchPick.getValue().toString());
+			}
 		}
 		
+		nameText.setText("");
 		priceText.setText("");
 		typeText.setText("");
 		removeBool.setSelected(false);
