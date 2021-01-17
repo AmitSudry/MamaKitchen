@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 
 public class EmployeeMainController implements Initializable 
 {
@@ -28,6 +29,11 @@ public class EmployeeMainController implements Initializable
 	private TextField ActionStatus; //check for employee permissions
 	
 	@FXML
+	private Label priceChangesText;
+	
+	private static boolean isPriceChangesAllowed = true;
+	
+	@FXML
 	void SwitchToBranchOccupationController(ActionEvent event) throws IOException 
 	{
 		if(employee==null)
@@ -36,6 +42,22 @@ public class EmployeeMainController implements Initializable
 		App.setRoot("viewOccupation");
 	}
 	
+	@FXML
+	void priceButtonChanged(ActionEvent event) throws IOException {
+		if(employee.getType() != 5) {
+			ActionStatus.setText("You are not authorized for this action!");
+			return;
+		}
+		if(isPriceChangesAllowed) {
+			priceChangesText.setText("Permit Price Changes");
+			ActionStatus.setText("Price Changes Prevented!");
+		} else {
+			priceChangesText.setText("Prevent Price Changes");
+			ActionStatus.setText("Price Changes Permitted!");
+		}
+		isPriceChangesAllowed = !isPriceChangesAllowed;
+		SimpleClient.getClient().sendToServer("#changePriceChangesPolicy");
+	}
 	
 	@FXML
 	void SwitchToUpdateItemController(ActionEvent event) throws IOException 

@@ -45,6 +45,7 @@ public class SimpleServer extends AbstractServer
 	private List<Delivery> activeDeliveries = new ArrayList<Delivery>();
 	private List<Complaint> activeComplaints = new ArrayList<Complaint>();
 	private List<Reservation> activeReservations = new ArrayList<Reservation>();
+	private static boolean priceChangesAllowed;
 	
 	/*
 	 * TODO entities: All types of workers, Branch and chain. 
@@ -67,6 +68,7 @@ public class SimpleServer extends AbstractServer
 	
 	private static void initializeData() throws Exception 
 	{
+		priceChangesAllowed = true;
 		//0-regular employee, 1-hostess, 2-dietitian, 3-customer service, 4-branch manager, 5-chain manager
 		Employee e1 = new Employee("1", "1", "Haifa", 0);
 		Employee e2 = new Employee("2", "2", "Jerusalem", 1);
@@ -74,7 +76,7 @@ public class SimpleServer extends AbstractServer
 		Employee e4 = new Employee("4", "4", "Haifa", 3);
 		Employee e5 = new Employee("5", "5", "Haifa", 4);
 		Employee e6 = new Employee("6", "6", "Jerusalem", 5);
-
+		
 		session.save(e1);
 		session.save(e2);
 		session.save(e3);
@@ -308,7 +310,9 @@ public class SimpleServer extends AbstractServer
 		if(index != -1)
 		{
 			//System.out.println(branches.get(target).getMenu().getItemList().get(index).getName() + " " + branches.get(target).getName());
-			branches.get(target).getMenu().getItemList().get(index).setPrice(Double.parseDouble(newPrice));
+			if(!newPrice.contains("miss") && priceChangesAllowed) {
+				branches.get(target).getMenu().getItemList().get(index).setPrice(Double.parseDouble(newPrice));
+			}
 			branches.get(target).getMenu().getItemList().get(index).setType(newType);
 		}	
 	}
@@ -496,6 +500,9 @@ public class SimpleServer extends AbstractServer
 			}
 			*/
 			removeItem(tokens[1], tokens[2]);
+		}
+		else if(msgString.contains("#changePriceChangesPolicy")) {
+			priceChangesAllowed = !priceChangesAllowed;
 		}
 	}
 }

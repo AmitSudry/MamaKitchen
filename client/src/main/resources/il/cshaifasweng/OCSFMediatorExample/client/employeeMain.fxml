@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="646.0" prefWidth="823.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.EmployeeMainController">
+<VBox alignment="CENTER" prefHeight="646.0" prefWidth="823.0" spacing="20.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.EmployeeMainController">
    <children>
       <Label prefHeight="46.0" prefWidth="132.0" text="EmployeeMainController" />
       <Label fx:id="EmployeeGreeting" text="Employee Name:" />
@@ -23,6 +23,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SwitchToUpdateItemController" text="Update Items" textAlignment="CENTER" />
@@ -30,6 +31,8 @@
             <Button layoutX="10.0" layoutY="37.0" mnemonicParsing="false" onAction="#SwitchToUpdateRegulationsController" text="Update Regulations" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
             <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#SwitchToBranchOccupationController" text="Show Branch Occupation" GridPane.rowIndex="2" />
             <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#SwitchToViewComplaintsController" text="View Complaints" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#priceButtonChanged" prefHeight="26.0" prefWidth="130.0" GridPane.rowIndex="5" />
+            <Label fx:id="priceChangesText" alignment="CENTER" mouseTransparent="true" prefHeight="25.0" prefWidth="132.0" text="Prevent Price Changes" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <GridPane prefHeight="74.0" prefWidth="783.0">

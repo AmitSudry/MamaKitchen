@@ -102,24 +102,32 @@ public class UpdateItemController implements Initializable
 		}
 		else
 		{
-			if(priceText.getText().equals("") || typeText.getText().equals(""))
+			if(typeText.getText().equals(""))
 			{
 				Status.setText("You're missing fields!");
 				return;
 			}
 			else
 			{
-				try 
-		    	{
-		    		Float.parseFloat(priceText.getText());
-		        } 
-		    	catch (final NumberFormatException e) 
-		    	{
-		    		Status.setText("Invalid new price!");
-		    		return;
-		        }
+				if(priceText.getText().equals("")) {
+					priceText.setText("miss");
+				} else {
+					try 
+			    	{
+			    		Float.parseFloat(priceText.getText());
+			        } 
+			    	catch (final NumberFormatException e) 
+			    	{
+			    		Status.setText("Invalid new price!");
+			    		return;
+			        }
+				}
 			}
 			if("add new item" == ItemPick.getValue().toString()) {
+				if(priceText.getText().contains("miss")) {
+					Status.setText("Invalid price for new product!");
+					return;
+				}
 				SimpleClient.getClient().sendToServer("#addItem "  
 						+ nameText.getText() + " "
 						+ typeText.getText() + " " 
