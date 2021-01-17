@@ -68,12 +68,12 @@ public class SimpleServer extends AbstractServer
 	private static void initializeData() throws Exception 
 	{
 		//0-regular employee, 1-hostess, 2-dietitian, 3-customer service, 4-branch manager, 5-chain manager
-		Employee e1 = new Employee("amit1", "amit123", "Haifa", 0);
-		Employee e2 = new Employee("amit2", "amit123456", "Jerusalem", 1);
-		Employee e3 = new Employee("amit3", "123456789", "Haifa", 2);
-		Employee e4 = new Employee("amit4", "2468", "Haifa", 3);
-		Employee e5 = new Employee("amit5", "hello123", "Haifa", 4);
-		Employee e6 = new Employee("amit6", "hi2468", "Jerusalem", 5);
+		Employee e1 = new Employee("1", "1", "Haifa", 0);
+		Employee e2 = new Employee("2", "2", "Jerusalem", 1);
+		Employee e3 = new Employee("3", "3", "Haifa", 2);
+		Employee e4 = new Employee("4", "4", "Haifa", 3);
+		Employee e5 = new Employee("5", "5", "Haifa", 4);
+		Employee e6 = new Employee("6", "6", "Jerusalem", 5);
 
 		session.save(e1);
 		session.save(e2);
@@ -314,8 +314,12 @@ public class SimpleServer extends AbstractServer
 	}
 	
 	private void addItem(Menu menu, Item item) {
-		menu.addItem(item);
+		menu.getItemList().add(item);
 		menu.getItemList().get(menu.getItemList().size() - 1).setId(menu.getItemList().size());
+		session.save(item);
+		session.save(menu);
+		session.flush();
+		session.getTransaction().commit();
 	}
 	
 	private void removeItem(String itemToRemove, String branchName)
@@ -470,12 +474,14 @@ public class SimpleServer extends AbstractServer
 				System.out.println("token " +i+" is:" + tokens[i]);
 			}
 			*/
+			if(tokens[4].contains("Jerusalem"))
+				tokens[4] = "1";
+			else
+				tokens[4] = "0";
 			Menu menu = branchesList.get(Integer.parseInt(tokens[4])).getMenu();
 			
-			System.out.println(menu.getName());
-
 			//Item item = new Item(tokens[1], tokens[2], Float.parseFloat(tokens[3]), menu);
-			Item item = new Item("aa", "aa", 101, menu);
+			Item item = new Item(tokens[1], tokens[2], Float.parseFloat(tokens[3]), menu);
 			
 			addItem(menu, item);
 						
