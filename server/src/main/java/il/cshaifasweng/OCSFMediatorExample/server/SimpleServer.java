@@ -97,20 +97,20 @@ public class SimpleServer extends AbstractServer
 		
 		session.flush();
 		
-		Item i1 = new Item("Banana", "chain", 50.5, menu1);
-		Item i2 = new Item("Apple", "chain", 12, menu1);
-		Item i3 = new Item("Yogurt", "branch", 13.5, menu1);
-		Item i4 = new Item("Cake", "chain", 105.5, menu1);
+		Item i1 = new Item("Banana", "chain", "banana", 50.5, menu1);
+		Item i2 = new Item("Apple", "chain", "apple", 12, menu1);
+		Item i3 = new Item("Yogurt", "branch", "milk", 13.5, menu1);
+		Item i4 = new Item("Cake", "chain", "chocolate, sugar and more", 105.5, menu1);
 		
-		Item i5 = new Item("Pie", "chain", 81, menu1);
-		Item i6 = new Item("Chicken", "branch", 82, menu1);
-		Item i7 = new Item("Rice", "branch", 49, menu1);
-		Item i8 = new Item("Hamburger", "branch", 47.5, menu1);
+		Item i5 = new Item("Pie", "chain", "ask the seller(changing)", 81, menu1);
+		Item i6 = new Item("Chicken", "branch", "chicken, lemon", 82, menu1);
+		Item i7 = new Item("Rice", "branch", "Rice, salt", 49, menu1);
+		Item i8 = new Item("Hamburger", "branch", "Hamburger, bread", 47.5, menu1);
 		
-		Item i9 = new Item("Pasta", "branch", 35.5, menu1);
-		Item i10 = new Item("Pizza", "chain", 25, menu1);
-		Item i11 = new Item("Tea", "branch", 10.3, menu1);
-		Item i12 = new Item("Coffee", "chain", 8, menu1);
+		Item i9 = new Item("Pasta", "branch", "pasta, tomato", 35.5, menu1);
+		Item i10 = new Item("Pizza", "chain", "cheese, bread", 25, menu1);
+		Item i11 = new Item("Tea", "branch", "tea, sugar", 10.3, menu1);
+		Item i12 = new Item("Coffee", "chain", "coffee, sugar", 8, menu1);
 		
 		session.save(i1);
 		session.save(i2);
@@ -156,20 +156,20 @@ public class SimpleServer extends AbstractServer
 		
 		session.flush();
 		
-		Item i13 = new Item("Banana_jerusalem", "chain", 50.5, menu2);
-		Item i14 = new Item("Apple_jerusalem", "chain", 12, menu2);
-		Item i15 = new Item("Yogurt_jerusalem", "branch", 13.5, menu2);
-		Item i16 = new Item("Cake_jerusalem", "chain", 105.5, menu2);
+		Item i13 = new Item("Banana_jerusalem", "chain", "banana", 50.5, menu2);
+		Item i14 = new Item("Apple_jerusalem", "chain", "apple", 12, menu2);
+		Item i15 = new Item("Yogurt_jerusalem", "branch", "milk", 13.5, menu2);
+		Item i16 = new Item("Cake_jerusalem", "chain", "chocolate, sugar and more", 105.5, menu2);
 		
-		Item i17 = new Item("Pie_jerusalem", "chain", 81, menu2);
-		Item i18 = new Item("Chicken_jerusalem", "branch", 82, menu2);
-		Item i19 = new Item("Rice_jerusalem", "branch", 49, menu2);
-		Item i20 = new Item("Hamburger_jerusalem", "branch", 47.5, menu2);
+		Item i17 = new Item("Pie_jerusalem", "chain", "ask the seller(changing)", 81, menu2);
+		Item i18 = new Item("Chicken_jerusalem", "branch", "chicken, lemon", 82, menu2);
+		Item i19 = new Item("Rice_jerusalem", "branch", "rice, salt", 49, menu2);
+		Item i20 = new Item("Hamburger_jerusalem", "branch", "Hamburger, bread", 47.5, menu2);
 		
-		Item i21 = new Item("Pasta_jerusalem", "branch", 35.5, menu2);
-		Item i22 = new Item("Pizza_jerusalem", "chain", 25, menu2);
-		Item i23 = new Item("Tea_jerusalem", "branch", 10.3, menu2);
-		Item i24 = new Item("Coffee_jerusalem", "chain", 8, menu2);
+		Item i21 = new Item("Pasta_jerusalem", "branch", "pasta, tomato", 35.5, menu2);
+		Item i22 = new Item("Pizza_jerusalem", "chain", "cheese, bread", 25, menu2);
+		Item i23 = new Item("Tea_jerusalem", "branch", "tea, sugar", 10.3, menu2);
+		Item i24 = new Item("Coffee_jerusalem", "chain", "coffee, sugar", 8, menu2);
 		
 		session.save(i13);
 		session.save(i14);
@@ -276,7 +276,7 @@ public class SimpleServer extends AbstractServer
 		}
 	}
 	
-	private void updateItem(String itemToUpdate, String newPrice, String newType, String branchName)
+	private void updateItem(String itemToUpdate, String newPrice, String newType, String branchName, String newIngridients)
 	{
 		int target = -1;
 		
@@ -314,6 +314,7 @@ public class SimpleServer extends AbstractServer
 				branches.get(target).getMenu().getItemList().get(index).setPrice(Double.parseDouble(newPrice));
 			}
 			branches.get(target).getMenu().getItemList().get(index).setType(newType);
+			branches.get(target).getMenu().getItemList().get(index).setIngridients(newIngridients);
 		}	
 	}
 	
@@ -467,7 +468,7 @@ public class SimpleServer extends AbstractServer
 				System.out.println("token " +i+" is:" + tokens[i]);
 			}
 			*/
-			updateItem(tokens[1], tokens[2], tokens[3], tokens[4]);
+			updateItem(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
 		}
 		else if (msgString.startsWith("#addItem")) //receiving requests to update an item
 		{
@@ -478,14 +479,14 @@ public class SimpleServer extends AbstractServer
 				System.out.println("token " +i+" is:" + tokens[i]);
 			}
 			*/
-			if(tokens[4].contains("Jerusalem"))
-				tokens[4] = "1";
+			if(tokens[5].contains("Jerusalem"))
+				tokens[5] = "1";
 			else
-				tokens[4] = "0";
-			Menu menu = branchesList.get(Integer.parseInt(tokens[4])).getMenu();
+				tokens[5] = "0";
+			Menu menu = branchesList.get(Integer.parseInt(tokens[5])).getMenu();
 			
 			//Item item = new Item(tokens[1], tokens[2], Float.parseFloat(tokens[3]), menu);
-			Item item = new Item(tokens[1], tokens[2], Float.parseFloat(tokens[3]), menu);
+			Item item = new Item(tokens[1], tokens[2], tokens[3], Float.parseFloat(tokens[4]), menu);
 			
 			addItem(menu, item);
 						
