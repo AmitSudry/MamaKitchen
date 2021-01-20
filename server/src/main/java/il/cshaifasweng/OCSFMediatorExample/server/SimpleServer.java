@@ -45,6 +45,10 @@ public class SimpleServer extends AbstractServer
 	private List<Delivery> activeDeliveries = new ArrayList<Delivery>();
 	private List<Complaint> activeComplaints = new ArrayList<Complaint>();
 	private List<Reservation> activeReservations = new ArrayList<Reservation>();
+	private static int openHourHaifa, openMinuteHaifa, closeHourHaifa, closeMinuteHaifa;
+	private static int openHourJerusalem, openMinuteJerusalem, closeHourJerusalem, closeMinuteJerusalem;
+	private static int maxOpen, maxClose;
+	private static boolean isDelivery;
 	private static boolean priceChangesAllowed;
 	
 	/*
@@ -76,6 +80,18 @@ public class SimpleServer extends AbstractServer
 		Employee e4 = new Employee("4", "4", "Haifa", 3);
 		Employee e5 = new Employee("5", "5", "Haifa", 4);
 		Employee e6 = new Employee("6", "6", "Jerusalem", 5);
+		
+		openHourHaifa = 12;
+		openMinuteHaifa = 0;
+		closeHourHaifa = 8;
+		closeMinuteHaifa = 0;
+		openHourJerusalem = 12;
+		openMinuteJerusalem = 0;
+		closeHourJerusalem = 8;
+		closeMinuteJerusalem = 0;
+		maxOpen = 20;
+		maxClose = 10;
+		isDelivery = false;
 		
 		session.save(e1);
 		session.save(e2);
@@ -501,6 +517,39 @@ public class SimpleServer extends AbstractServer
 			}
 			*/
 			removeItem(tokens[1], tokens[2]);
+		}
+		else if(msgString.contains("#setCurrentRegulations")) {
+			String[] tokens = msgString.split("\\s+");
+			openHourHaifa = Integer.parseInt(tokens[1]);
+			openMinuteHaifa = Integer.parseInt(tokens[2]);
+			closeHourHaifa = Integer.parseInt(tokens[3]);
+			closeMinuteHaifa = Integer.parseInt(tokens[4]);
+			openHourJerusalem = Integer.parseInt(tokens[5]);
+			openMinuteJerusalem = Integer.parseInt(tokens[6]);
+			closeHourJerusalem = Integer.parseInt(tokens[7]);
+			closeMinuteJerusalem = Integer.parseInt(tokens[8]);
+			maxOpen = Integer.parseInt(tokens[9]);
+			maxClose = Integer.parseInt(tokens[10]);
+			isDelivery = Boolean.parseBoolean(tokens[11]);
+		}
+		else if(msgString.contains("#getCurrentRegulations")) {
+			try {
+				client.sendToClient("#regulations " + 
+									String.valueOf(openHourHaifa) + " " + 
+									String.valueOf(openMinuteHaifa) + " " + 
+									String.valueOf(closeHourHaifa) + " " + 
+									String.valueOf(closeMinuteHaifa) + " " +
+									String.valueOf(openHourJerusalem) + " " + 
+									String.valueOf(openMinuteJerusalem) + " " + 
+									String.valueOf(closeHourJerusalem) + " " + 
+									String.valueOf(closeMinuteJerusalem) + " " +
+									String.valueOf(maxOpen) + " " + 
+									String.valueOf(maxClose) + " " +
+									String.valueOf(isDelivery));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else if(msgString.contains("#changePriceChangesPolicy")) {
 			priceChangesAllowed = !priceChangesAllowed;

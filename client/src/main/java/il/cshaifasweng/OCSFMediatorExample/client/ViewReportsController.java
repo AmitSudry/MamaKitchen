@@ -34,6 +34,8 @@ public class ViewReportsController implements Initializable
 
     @FXML
     private TextField ActionStatus;
+    
+    private String regulations;
 
 	
     @FXML
@@ -87,5 +89,6 @@ public class ViewReportsController implements Initializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		regulations = SimpleClient.getMsgString();
 	}
 }
