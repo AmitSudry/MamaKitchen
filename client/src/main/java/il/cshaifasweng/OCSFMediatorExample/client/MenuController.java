@@ -50,7 +50,31 @@ public class MenuController implements Initializable
         	}	
         }	
         
-        Menu.setText("");
+        Menu.setText("Showing " + BranchPick.getValue().toString() + " Menu:\n");
+        
+        int open = branchList.get(branchIndex).getOpeningHour();
+        int close = branchList.get(branchIndex).getClosingHour();
+        
+        int hour = open/100;
+        String hourStr = String.valueOf(hour);
+        if (hour < 10) hourStr = "0" + hourStr;
+        
+        int minutes = open - hour * 100;
+        String minutesStr = String.valueOf(minutes);
+        if (minutes < 10) minutesStr += "0";
+        
+        Menu.appendText("Opening hour: " + hourStr + ":" + minutesStr + "\n");
+        
+        hour = close/100;
+        hourStr = String.valueOf(hour);
+        if (hour < 10) hourStr = "0" + hourStr;
+        
+        minutes = close - hour * 100;
+        minutesStr = String.valueOf(minutes);
+        if (minutes < 10) minutesStr += "0";
+        
+        Menu.appendText("Closing hour: " + hourStr + ":" + minutesStr + "\n\n");
+        
         for(int i=0; i<branchList.get(branchIndex).getMenu().getItemList().size(); i++)
     	{	
     		Menu.appendText(branchList.get(branchIndex).getMenu().getItemList().get(i).toString() + "\n");
