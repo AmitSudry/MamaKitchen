@@ -75,7 +75,7 @@ public class updateRegulation implements Initializable
 		
 		if(openHourHaifa.getText() != null && isNumeric(openHourHaifa.getText())) {
 			openHourHaifaReal = Integer.parseInt(openHourHaifa.getText());
-			if(openHourHaifaReal < 0 && openHourHaifaReal > 23) {
+			if(openHourHaifaReal < 0 || openHourHaifaReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -88,7 +88,7 @@ public class updateRegulation implements Initializable
 		
 		if(openMinuteHaifa.getText() != null && isNumeric(openMinuteHaifa.getText())) {
 			openMinuteHaifaReal = Integer.parseInt(openMinuteHaifa.getText());
-			if(openMinuteHaifaReal < 0 && openMinuteHaifaReal > 59) {
+			if(openMinuteHaifaReal < 0 || openMinuteHaifaReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -100,7 +100,7 @@ public class updateRegulation implements Initializable
 		
 		if(closeHourHaifa.getText() != null && isNumeric(closeHourHaifa.getText())) {
 			closeHourHaifaReal = Integer.parseInt(closeHourHaifa.getText());
-			if(closeHourHaifaReal < 0 && closeHourHaifaReal > 23) {
+			if(closeHourHaifaReal < 0 || closeHourHaifaReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -112,7 +112,7 @@ public class updateRegulation implements Initializable
 		
 		if(closeMinuteHaifa.getText() != null && isNumeric(closeMinuteHaifa.getText())) {
 			closeMinuteHaifaReal = Integer.parseInt(closeMinuteHaifa.getText());
-			if(closeMinuteHaifaReal < 0 && closeMinuteHaifaReal > 59) {
+			if(closeMinuteHaifaReal < 0 || closeMinuteHaifaReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -124,7 +124,7 @@ public class updateRegulation implements Initializable
 		
 		if(openHourJerusalem.getText() != null && isNumeric(openHourJerusalem.getText())) {
 			openHourJerusalemReal = Integer.parseInt(openHourJerusalem.getText());
-			if(openHourJerusalemReal < 0 && openHourJerusalemReal > 23) {
+			if(openHourJerusalemReal < 0 || openHourJerusalemReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -136,7 +136,7 @@ public class updateRegulation implements Initializable
 		
 		if(openMinuteJerusalem.getText() != null && isNumeric(openMinuteJerusalem.getText())) {
 			openMinuteJerusalemReal = Integer.parseInt(openMinuteJerusalem.getText());
-			if(openMinuteJerusalemReal < 0 && openMinuteJerusalemReal > 59) {
+			if(openMinuteJerusalemReal < 0 || openMinuteJerusalemReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -148,7 +148,7 @@ public class updateRegulation implements Initializable
 		
 		if(closeHourJerusalem.getText() != null && isNumeric(closeHourJerusalem.getText())) {
 			closeHourJerusalemReal = Integer.parseInt(closeHourJerusalem.getText());
-			if(closeHourJerusalemReal < 0 && closeHourJerusalemReal > 23) {
+			if(closeHourJerusalemReal < 0 || closeHourJerusalemReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
@@ -160,7 +160,7 @@ public class updateRegulation implements Initializable
 		
 		if(closeMinuteJerusalem.getText() != null && isNumeric(closeMinuteJerusalem.getText())) {
 			closeMinuteJerusalemReal = Integer.parseInt(closeMinuteJerusalem.getText());
-			if(closeMinuteJerusalemReal < 0 && closeMinuteJerusalemReal > 59) {
+			if(closeMinuteJerusalemReal < 0 || closeMinuteJerusalemReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
 				return;
