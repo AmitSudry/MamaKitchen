@@ -31,6 +31,9 @@ public class ReservationController implements Initializable
 	private int openMinute;
 	private int closeMinute;
 	
+	private int maxClose;
+	private int maxOpen;
+	
 	@FXML
     private TextField Phone;
 	
@@ -87,21 +90,26 @@ public class ReservationController implements Initializable
         openMinute = branchList.get(branchIndex).getOpenMinute();
         closeMinute = branchList.get(branchIndex).getCloseMinute();
         
+        maxClose = branchList.get(branchIndex).getMaxClose();
+        maxOpen = branchList.get(branchIndex).getMaxOpen();
+        
+        int tempOpenHour = openHour;
+        
         System.out.println("from " + openHour +  ":" + openMinute + "to " + closeHour + ":" + closeMinute);
-        while(openHour * 100 + openMinute <= (closeHour -1) * 100 + closeMinute) //reservation could be made from opening hour to one hour before closing
+        while(tempOpenHour * 100 + openMinute <= (closeHour -1) * 100 + closeMinute) //reservation could be made from opening hour to one hour before closing
         {
-        	if(openHour<10) 
+        	if(tempOpenHour<10) 
         	{
-        		if(!list2.contains("0" + openHour))
-        			list2.add("0" + openHour);
+        		if(!list2.contains("0" + tempOpenHour))
+        			list2.add("0" + tempOpenHour);
         	}
         	else
         	{
-        		if(!list2.contains(String.valueOf(openHour)))
-        			list2.add(String.valueOf(openHour));
+        		if(!list2.contains(String.valueOf(tempOpenHour)))
+        			list2.add(String.valueOf(tempOpenHour));
         	}
 
-        	openHour += 1; 	
+        	tempOpenHour += 1; 	
         }
         
         for(int i=0; i<60; i+=15)
@@ -171,6 +179,15 @@ public class ReservationController implements Initializable
         }
     	
     	boolean isInside = DiningPick.getValue().toString().equals("Inside") ? true : false;
+    	
+    	if (isInside && numOfPeople > maxClose) {
+    		ReservationStatus.setText("Maximum number of custumers in closed space is " + String.valueOf(maxClose));
+    		return;
+    	}
+    	if (!isInside && numOfPeople > maxOpen) {
+    		ReservationStatus.setText("Maximum number of custumers in open space is " + String.valueOf(maxOpen));
+    		return;
+    	}
     	
     	Reservation r = new Reservation(BranchPick.getValue().toString(), Date.getValue().toString(),
     			numOfPeople, Integer.parseInt(HourPick.getValue().toString()),

@@ -36,6 +36,8 @@ public class DeliveryController implements Initializable
 	private int openMinute;
 	private int closeMinute;
 	
+	private boolean isDelivery;
+	
 	@FXML
 	private ComboBox<String> BranchPick;
 	
@@ -117,20 +119,24 @@ public class DeliveryController implements Initializable
         openMinute = branchList.get(branchIndex).getOpenMinute();
         closeMinute = branchList.get(branchIndex).getCloseMinute();
         
-        while(openHour * 100 + openMinute <= closeHour * 100 + closeMinute)
+        isDelivery = branchList.get(branchIndex).getIsDelivery();
+        
+        int tempOpenHour = openHour;
+        
+        while(tempOpenHour * 100 + openMinute <= closeHour * 100 + closeMinute)
         {
-        	if(openHour<10) // something like 855 yields that the hour should be 08 and not 8
+        	if(tempOpenHour<10) // something like 855 yields that the hour should be 08 and not 8
         	{
-        		if(!list2.contains("0" + openHour))
-        			list2.add("0" + openHour);
+        		if(!list2.contains("0" + tempOpenHour))
+        			list2.add("0" + tempOpenHour);
         	}
         	else
         	{
-        		if(!list2.contains(String.valueOf(openHour)))
-        			list2.add(String.valueOf(openHour));
+        		if(!list2.contains(String.valueOf(tempOpenHour)))
+        			list2.add(String.valueOf(tempOpenHour));
         	}
 
-        	openHour += 1; //delivery only every 30 minutes 	
+        	tempOpenHour += 1; //delivery only every 30 minutes 	
         }
         
         for(int i=0; i<60; i++)
@@ -170,22 +176,22 @@ public class DeliveryController implements Initializable
     	{
     		String from = "", to = "";
         	if(openHour<10) 
-        		from += "0" + openHour;
+        		from += "0" + String.valueOf(openHour);
         	else
         		from += String.valueOf(openHour);
         	from += ":";
         	if(openMinute<10) 
-        		from += "0" + openMinute;
+        		from += "0" + String.valueOf(openMinute);
         	else
         		from += String.valueOf(openMinute);
         	
         	if(closeHour<10) 
-        		to += "0" + closeHour;
+        		to += "0" +  String.valueOf(closeHour);
         	else
         		to += String.valueOf(closeHour);
         	to += ":";
         	if(closeMinute<10) 
-        		to += "0" + closeMinute;
+        		to += "0" + String.valueOf(closeMinute);
         	else
         		to += String.valueOf(closeMinute);
         	
@@ -203,10 +209,14 @@ public class DeliveryController implements Initializable
     	cart.setCreditCard(isCredit);
     	cart.setDate(DatePick.getValue().toString());
     	double total = Double.parseDouble(Total.getText());
-    	
+
     	OrderStatus.setText("Your order has been accepted!");
     	if(!isTA)
     	{
+    		if (!isDelivery) {
+    			OrderStatus.setText("We don't deliver right now.");
+    			return;
+    		}
     		total += 15.0; //deliveryFee
     		OrderStatus.appendText(" Delivery fee included(15.0)!");
     	}
