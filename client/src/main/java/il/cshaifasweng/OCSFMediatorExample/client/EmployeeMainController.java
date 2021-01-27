@@ -2,11 +2,13 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Branch;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,8 @@ public class EmployeeMainController implements Initializable
 {
 	private static Employee employee;
 	
+	private List<Branch> branchList;
+	
 	@FXML
 	private Label EmployeeGreeting;
 	 
@@ -36,24 +40,18 @@ public class EmployeeMainController implements Initializable
 	
 	private static boolean isPriceChangesAllowed = true;
 	
-	private static int openHourHaifa, openMinuteHaifa, closeHourHaifa, closeMinuteHaifa;
-	private static int openHourJerusalem, openMinuteJerusalem, closeHourJerusalem, closeMinuteJerusalem;
-	private static int maxOpen, maxClose;
-	private static boolean isDelivery;
-	
-	public void setReg(String regulations) {
-		String[] tokens = regulations.split("\\s+");
-		openHourHaifa = Integer.parseInt(tokens[1]);
-		openMinuteHaifa = Integer.parseInt(tokens[2]);
-		closeHourHaifa = Integer.parseInt(tokens[3]);
-		closeMinuteHaifa = Integer.parseInt(tokens[4]);
-		openHourJerusalem = Integer.parseInt(tokens[5]);
-		openMinuteJerusalem = Integer.parseInt(tokens[6]);
-		closeHourJerusalem = Integer.parseInt(tokens[7]);
-		closeMinuteJerusalem = Integer.parseInt(tokens[8]);
-		maxOpen = Integer.parseInt(tokens[9]);
-		maxClose = Integer.parseInt(tokens[10]);
-		isDelivery = Boolean.parseBoolean(tokens[11]);
+	public void setReg() {
+		int openHourHaifa = branchList.get(0).getOpenHour();
+		int openMinuteHaifa = branchList.get(0).getOpenMinute();
+		int closeHourHaifa = branchList.get(0).getCloseHour();
+		int closeMinuteHaifa = branchList.get(0).getCloseMinute();
+		int openHourJerusalem = branchList.get(1).getOpenHour();
+		int openMinuteJerusalem = branchList.get(1).getOpenMinute();
+		int closeHourJerusalem = branchList.get(1).getCloseHour();
+		int closeMinuteJerusalem = branchList.get(1).getCloseMinute();
+		int maxOpen = branchList.get(0).getMaxOpen();
+		int maxClose = branchList.get(0).getMaxClose();
+		boolean isDelivery = branchList.get(0).getIsDelivery();
 		
 		
 		String msg = "Wellcome to Mom's kitchen!\r\n"
@@ -184,8 +182,7 @@ public class EmployeeMainController implements Initializable
 	}
 	@FXML
 	void showRegulations(ActionEvent event) {
-		String regulations = SimpleClient.getMsgString();
-		setReg(regulations);
+		setReg();
 	}
 	
     @Subscribe
@@ -195,16 +192,27 @@ public class EmployeeMainController implements Initializable
     	EmployeeGreeting.setText("Hello " + employee.getUserName());
     }
     
+    @Subscribe
+    public void onWarningEvent(GetBranchesEvent event) 
+    {
+        
+        branchList = event.getDetails().getBranches();
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		// TODO Auto-generated method stub
 		EventBus.getDefault().register(this);
-		try {
-			SimpleClient.getClient().sendToServer("#getCurrentRegulations ");
-		} catch (IOException e) {
+		try 
+    	{
+			SimpleClient.getClient().sendToServer("#showMenu");
+		} 
+    	catch (IOException e) 
+    	{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 }

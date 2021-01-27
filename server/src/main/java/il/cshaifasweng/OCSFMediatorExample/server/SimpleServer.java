@@ -103,7 +103,7 @@ public class SimpleServer extends AbstractServer
 		session.flush();
 		
 		Menu menu1 = new Menu("RestMenu_Haifa");
-		Branch b1 = new Branch("Haifa", 1100, 1930);
+		Branch b1 = new Branch("Haifa", 11, 30, 19, 30, 20, 10, true);
 		
 		menu1.setBranch(b1);
 		b1.setMenu(menu1);
@@ -162,7 +162,7 @@ public class SimpleServer extends AbstractServer
     	session.flush();
     	
     	Menu menu2 = new Menu("RestMenu_jerusalem");
-		Branch b2 = new Branch("Jerusalem", 830, 2030);
+		Branch b2 = new Branch("Jerusalem", 8, 30, 20, 30, 20, 10, true);
 		
 		menu2.setBranch(b2);
 		b2.setMenu(menu2);
@@ -520,36 +520,31 @@ public class SimpleServer extends AbstractServer
 		}
 		else if(msgString.contains("#setCurrentRegulations")) {
 			String[] tokens = msgString.split("\\s+");
-			openHourHaifa = Integer.parseInt(tokens[1]);
-			openMinuteHaifa = Integer.parseInt(tokens[2]);
-			closeHourHaifa = Integer.parseInt(tokens[3]);
-			closeMinuteHaifa = Integer.parseInt(tokens[4]);
-			openHourJerusalem = Integer.parseInt(tokens[5]);
-			openMinuteJerusalem = Integer.parseInt(tokens[6]);
-			closeHourJerusalem = Integer.parseInt(tokens[7]);
-			closeMinuteJerusalem = Integer.parseInt(tokens[8]);
-			maxOpen = Integer.parseInt(tokens[9]);
-			maxClose = Integer.parseInt(tokens[10]);
-			isDelivery = Boolean.parseBoolean(tokens[11]);
-		}
-		else if(msgString.contains("#getCurrentRegulations")) {
-			try {
-				client.sendToClient("#regulations " + 
-									String.valueOf(openHourHaifa) + " " + 
-									String.valueOf(openMinuteHaifa) + " " + 
-									String.valueOf(closeHourHaifa) + " " + 
-									String.valueOf(closeMinuteHaifa) + " " +
-									String.valueOf(openHourJerusalem) + " " + 
-									String.valueOf(openMinuteJerusalem) + " " + 
-									String.valueOf(closeHourJerusalem) + " " + 
-									String.valueOf(closeMinuteJerusalem) + " " +
-									String.valueOf(maxOpen) + " " + 
-									String.valueOf(maxClose) + " " +
-									String.valueOf(isDelivery));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			int openHourHaifa = Integer.parseInt(tokens[1]);
+			int openMinuteHaifa = Integer.parseInt(tokens[2]);
+			int closeHourHaifa = Integer.parseInt(tokens[3]);
+			int closeMinuteHaifa = Integer.parseInt(tokens[4]);
+			int openHourJerusalem = Integer.parseInt(tokens[5]);
+			int openMinuteJerusalem = Integer.parseInt(tokens[6]);
+			int closeHourJerusalem = Integer.parseInt(tokens[7]);
+			int closeMinuteJerusalem = Integer.parseInt(tokens[8]);
+			int maxOpen = Integer.parseInt(tokens[9]);
+			int maxClose = Integer.parseInt(tokens[10]);
+			boolean isDelivery = Boolean.parseBoolean(tokens[11]);
+			branches.get(0).setOpenHour(openHourHaifa);
+			branches.get(0).setOpenMinute(openMinuteHaifa);
+			branches.get(0).setCloseHour(closeHourHaifa);
+			branches.get(0).setCloseMinute(closeMinuteHaifa);
+			branches.get(0).setMaxOpen(maxOpen);
+			branches.get(0).setMaxClose(maxClose);
+			branches.get(0).setIsDelivery(isDelivery);
+			branches.get(1).setOpenHour(openHourJerusalem);
+			branches.get(1).setOpenMinute(openMinuteJerusalem);
+			branches.get(1).setCloseHour(closeHourJerusalem);
+			branches.get(1).setCloseMinute(closeMinuteJerusalem);
+			branches.get(1).setMaxOpen(maxOpen);
+			branches.get(1).setMaxClose(maxClose);
+			branches.get(1).setIsDelivery(isDelivery);
 		}
 		else if(msgString.contains("#changePriceChangesPolicy")) {
 			priceChangesAllowed = !priceChangesAllowed;

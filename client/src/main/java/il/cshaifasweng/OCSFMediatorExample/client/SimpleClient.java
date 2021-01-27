@@ -15,7 +15,6 @@ public class SimpleClient extends AbstractClient
 {
 	
 	private static SimpleClient client = null;
-	private static String strMsg;
 
 	private SimpleClient(String host, int port) 
 	{
@@ -25,11 +24,7 @@ public class SimpleClient extends AbstractClient
 	@Override
 	protected void handleMessageFromServer(Object msg) 
 	{
-		String msgString = msg.toString();
-		if (msgString.contains("#regulations")) {
-			strMsg = msgString;
-		}
-		else if(msg.getClass().equals(Employee.class))
+		if(msg.getClass().equals(Employee.class))
 		{
 			EventBus.getDefault().post((Employee) msg);
 		}
@@ -51,8 +46,5 @@ public class SimpleClient extends AbstractClient
 		return client;
 	}
 	
-	public static String getMsgString() {
-		return strMsg;
-	}
 
 }

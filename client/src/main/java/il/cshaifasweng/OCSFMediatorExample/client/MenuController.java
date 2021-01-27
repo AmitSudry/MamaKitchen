@@ -52,26 +52,24 @@ public class MenuController implements Initializable
         
         Menu.setText("Showing " + BranchPick.getValue().toString() + " Menu:\n");
         
-        int open = branchList.get(branchIndex).getOpeningHour();
-        int close = branchList.get(branchIndex).getClosingHour();
+        int openHour = branchList.get(branchIndex).getOpenHour();
+        int closeHour = branchList.get(branchIndex).getCloseHour();
+        int openMinute = branchList.get(branchIndex).getOpenMinute();
+        int closeMinute = branchList.get(branchIndex).getCloseMinute();
         
-        int hour = open/100;
-        String hourStr = String.valueOf(hour);
-        if (hour < 10) hourStr = "0" + hourStr;
+        String hourStr = String.valueOf(openHour);
+        if (openHour < 10) hourStr = "0" + hourStr;
         
-        int minutes = open - hour * 100;
-        String minutesStr = String.valueOf(minutes);
-        if (minutes < 10) minutesStr += "0";
+        String minutesStr = String.valueOf(openMinute);
+        if (openMinute < 10) minutesStr = "0" + minutesStr;
         
         Menu.appendText("Opening hour: " + hourStr + ":" + minutesStr + "\n");
         
-        hour = close/100;
-        hourStr = String.valueOf(hour);
-        if (hour < 10) hourStr = "0" + hourStr;
+        hourStr = String.valueOf(closeHour);
+        if (closeHour < 10) hourStr = "0" + hourStr;
         
-        minutes = close - hour * 100;
-        minutesStr = String.valueOf(minutes);
-        if (minutes < 10) minutesStr += "0";
+        minutesStr = String.valueOf(closeMinute);
+        if (closeMinute < 10) minutesStr = "0" + minutesStr;
         
         Menu.appendText("Closing hour: " + hourStr + ":" + minutesStr + "\n\n");
         

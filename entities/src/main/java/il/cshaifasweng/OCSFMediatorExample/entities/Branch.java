@@ -34,8 +34,11 @@ public class Branch implements Serializable
 	
 	private String name;
 	
-	private int openingHour; // 815 - 08:15, 1145 - 11:45
-	private int closingHour; //Same deal
+	private int openingHour; 
+	private int closingHour; 
+	private int openHour, openMinute, closeHour, closeMinute;
+	private int maxOpen, maxClose;
+	private boolean isDelivery;
 	
 	//@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_id")
@@ -47,12 +50,17 @@ public class Branch implements Serializable
 		super();
 	}
 	
-	public Branch(String name, int openingHour, int closingHour) 
+	public Branch(String name, int openHour, int openMinute, int closeHour, int closeMinute, int maxOpen, int maxClose, boolean isDelivery) 
 	{
 		super();
 		this.name = name;
-		this.openingHour = openingHour;
-		this.closingHour = closingHour;
+		this.openHour = openHour;
+		this.closeHour = closeHour;
+		this.openMinute = openMinute;
+		this.closeMinute = closeMinute;
+		this.maxOpen = maxOpen;
+		this.maxClose = maxClose;
+		this.isDelivery = isDelivery;
 	}
 
 	public String getName() {
@@ -71,20 +79,60 @@ public class Branch implements Serializable
 		this.menu = menu;
 	}
 
-	public int getOpeningHour() {
-		return openingHour;
+	public int getOpenHour() {
+		return openHour;
 	}
 
-	public void setOpeningHour(int openingHour) {
-		this.openingHour = openingHour;
+	public void setOpenHour(int openHour) {
+		this.openHour = openHour;
 	}
 
-	public int getClosingHour() {
-		return closingHour;
+	public int getCloseHour() {
+		return closeHour;
 	}
-
-	public void setClosingHour(int closingHour) {
-		this.closingHour = closingHour;
+	
+	public void setCloseHour(int closeHour) {
+		this.closeHour = closeHour;
+	}
+	
+	public void setCloseMinute(int closeMinute) {
+		this.closeMinute = closeMinute;
+	}
+	
+	public int getCloseMinute() {
+		return closeMinute;
+	}
+	
+	public int getOpenMinute() {
+		return openMinute;
+	}
+	
+	public void setOpenMinute(int openMinute) {
+		this.openMinute = openMinute;
+	}
+	
+	public int getMaxOpen() {
+		return maxOpen;
+	}
+	
+	public void setMaxOpen(int maxOpen) {
+		this.maxOpen = maxOpen;
+	}
+	
+	public int getMaxClose() {
+		return maxClose;
+	}
+	
+	public void setMaxClose(int maxClose) {
+		this.maxClose = maxClose;
+	}
+	
+	public boolean getIsDelivery() {
+		return isDelivery;
+	}
+	
+	public void setIsDelivery(boolean isDelivery) {
+		this.isDelivery = isDelivery;
 	}
 
 	@Override

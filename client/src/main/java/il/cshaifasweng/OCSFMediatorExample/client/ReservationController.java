@@ -26,8 +26,10 @@ public class ReservationController implements Initializable
 	
 	private List<Branch> branchList;
 	
-	private int openingHour;
-	private int closingHour;
+	private int openHour;
+	private int closeHour;
+	private int openMinute;
+	private int closeMinute;
 	
 	@FXML
     private TextField Phone;
@@ -80,27 +82,26 @@ public class ReservationController implements Initializable
         MinutesPick.getItems().clear();
         ObservableList<String> list3 = MinutesPick.getItems();
         
-        int open = branchList.get(branchIndex).getOpeningHour();
-        int close = branchList.get(branchIndex).getClosingHour();
+        openHour = branchList.get(branchIndex).getOpenHour();
+        closeHour = branchList.get(branchIndex).getCloseHour();
+        openMinute = branchList.get(branchIndex).getOpenMinute();
+        closeMinute = branchList.get(branchIndex).getCloseMinute();
         
-        openingHour = open;
-        closingHour = close;
-        System.out.println("from " + openingHour + " to " + closingHour);
-        while(open <= close-100) //reservation could be made from opening hour to one hour before closing
+        System.out.println("from " + openHour +  ":" + openMinute + "to " + closeHour + ":" + closeMinute);
+        while(openHour * 100 + openMinute <= (closeHour -1) * 100 + closeMinute) //reservation could be made from opening hour to one hour before closing
         {
-        	int hour = open/100;
-        	if(hour<10) 
+        	if(openHour<10) 
         	{
-        		if(!list2.contains("0" + hour))
-        			list2.add("0" + hour);
+        		if(!list2.contains("0" + openHour))
+        			list2.add("0" + openHour);
         	}
         	else
         	{
-        		if(!list2.contains(String.valueOf(hour)))
-        			list2.add(String.valueOf(hour));
+        		if(!list2.contains(String.valueOf(openHour)))
+        			list2.add(String.valueOf(openHour));
         	}
 
-        	open += 100; 	
+        	openHour += 1; 	
         }
         
         for(int i=0; i<60; i+=15)
@@ -131,32 +132,28 @@ public class ReservationController implements Initializable
     	
     	int requestedHour = Integer.parseInt(HourPick.getValue().toString())*100 + Integer.parseInt(MinutesPick.getValue().toString());
     	
-    	if(requestedHour < openingHour || requestedHour > closingHour-100) //wrong hour
+    	if(requestedHour < openHour * 100 + openMinute || requestedHour > closeHour * 100 - 100 + closeMinute) //wrong hour
     	{
     		String from = "", to = "";
-    		int hour = openingHour/100;
-        	if(hour<10) 
-        		from += "0" + hour;
+        	if(openHour<10) 
+        		from += "0" + openHour;
         	else
-        		from += String.valueOf(hour);
+        		from += String.valueOf(openHour);
         	from += ":";
-        	int minutes = openingHour%100;
-        	if(minutes<10) 
-        		from += "0" + minutes;
+        	if(openMinute<10) 
+        		from += "0" + openMinute;
         	else
-        		from += String.valueOf(minutes);
+        		from += String.valueOf(openMinute);
         	
-        	hour = (closingHour-100)/100; //one hour before closing
-        	if(hour<10) 
-        		to += "0" + hour;
+        	if(closeHour - 1<10) 
+        		to += "0" + (closeHour - 1);
         	else
-        		to += String.valueOf(hour);
+        		to += String.valueOf((closeHour - 1));
         	to += ":";
-        	minutes = closingHour%100;
-        	if(minutes<10) 
-        		to += "0" + minutes;
+        	if(closeMinute<10) 
+        		to += "0" + closeMinute;
         	else
-        		to += String.valueOf(minutes);
+        		to += String.valueOf(closeMinute);
         	
         	ReservationStatus.setText("You can book a table from " + from + " to " + to);
     		return;

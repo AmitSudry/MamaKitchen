@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 
 public class updateRegulation implements Initializable 
 {
+	private List<Branch> branchList;
 	@FXML
 	private TextField openHourHaifa, openMinuteHaifa, closeHourHaifa, closeMinuteHaifa;
 	@FXML
@@ -222,11 +223,20 @@ public class updateRegulation implements Initializable
 	@Subscribe
     public void onWarningEvent(GetBranchesEvent event) 
     {
-    	
+    	branchList = event.getDetails().getBranches();
     }
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		EventBus.getDefault().register(this);
+		try 
+    	{
+			SimpleClient.getClient().sendToServer("#showMenu");
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
