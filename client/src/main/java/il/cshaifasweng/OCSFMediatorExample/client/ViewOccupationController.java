@@ -10,8 +10,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Branch;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
+import il.cshaifasweng.OCSFMediatorExample.entities.DiningTable;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
+import il.cshaifasweng.OCSFMediatorExample.entities.Reservation;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,8 +48,25 @@ public class ViewOccupationController implements Initializable
 			displayText = area.getText();
 			
     	area.setText("");
-    	area.appendText("The occupation of branch " + BranchPick.getValue().toString() + " should be displayed\n\n");
-    	area.appendText(displayText);
+    	area.appendText("The occupation of branch " + BranchPick.getValue().toString() + ":\n\n");
+    	
+    	int branchIndex = -1;
+        for(int i=0; i<branchList.size(); i++)
+        {
+        	if(branchList.get(i).getName().equals(BranchPick.getValue().toString()))
+        	{
+        		branchIndex = i;
+        		break;
+        	}	
+        }	
+    	
+    	for (DiningTable table: branchList.get(branchIndex).getTableList()) {
+    		area.appendText(table.toString() + "\n");
+    		for (Reservation r: table.getReservations()) {
+    			area.appendText(r.toString() + "\n");
+    		}
+    		area.appendText("\n");
+    	}
     }
     
 	@FXML

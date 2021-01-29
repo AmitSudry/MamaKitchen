@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,11 @@ import java.util.*;
 @Table(name = "branchs")
 public class Branch implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@JoinColumn(insertable = false, updatable = false)
@@ -44,6 +50,9 @@ public class Branch implements Serializable
     @JoinColumn(name = "menu_id")
 	@OneToOne(mappedBy = "branch")
 	private Menu menu;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
+	private List<DiningTable> tableList;
 	
 	public Branch() 
 	{
@@ -61,8 +70,10 @@ public class Branch implements Serializable
 		this.maxOpen = maxOpen;
 		this.maxClose = maxClose;
 		this.isDelivery = isDelivery;
+		
+		this.tableList = new ArrayList<DiningTable>();
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -77,6 +88,21 @@ public class Branch implements Serializable
 
 	public void setMenu(Menu menu) {
 		this.menu = menu;
+	}
+	
+	public void addTable(DiningTable table) {
+		this.tableList.add(table);
+	}
+	
+	public List<DiningTable> getTableList() {
+		return tableList;
+	}
+	
+	public DiningTable getTable(int id) {
+		for (DiningTable table: tableList) {
+			if (table.getId() == id) return table;
+		}
+		return null;
 	}
 
 	public int getOpenHour() {

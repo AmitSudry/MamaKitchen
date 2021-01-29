@@ -9,6 +9,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Branch;
+import il.cshaifasweng.OCSFMediatorExample.entities.DiningTable;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Reservation;
 import javafx.collections.ObservableList;
@@ -25,6 +26,8 @@ public class ReservationController implements Initializable
 {
 	
 	private List<Branch> branchList;
+	
+	private List<DiningTable> tableList;
 	
 	private int openHour;
 	private int closeHour;
@@ -84,6 +87,8 @@ public class ReservationController implements Initializable
         ObservableList<String> list2 = HourPick.getItems();
         MinutesPick.getItems().clear();
         ObservableList<String> list3 = MinutesPick.getItems();
+        
+        tableList = branchList.get(branchIndex).getTableList();
         
         openHour = branchList.get(branchIndex).getOpenHour();
         closeHour = branchList.get(branchIndex).getCloseHour();
@@ -191,7 +196,20 @@ public class ReservationController implements Initializable
     	
     	Reservation r = new Reservation(BranchPick.getValue().toString(), Date.getValue().toString(),
     			numOfPeople, Integer.parseInt(HourPick.getValue().toString()),
-    			Name.getText(), isInside, Phone.getText());
+    			Name.getText(), isInside, Phone.getText(), -1);
+    	
+    	int tableId = -1;
+    	for (int i = 0; i < tableList.size() && tableId == -1; i++) {
+    		tableId = tableList.get(i).reserveTable(r);
+    	}
+    	
+    	if (tableId == -1) {
+    		ReservationStatus.setText("Unable to book a table.");
+    		return;
+    	}
+    	else {
+    		r.setTableId(tableId);
+    	}
     	
     	Phone.setText("");
     	Name.setText("");

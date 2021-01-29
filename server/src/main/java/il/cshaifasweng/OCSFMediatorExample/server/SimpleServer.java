@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
+import il.cshaifasweng.OCSFMediatorExample.entities.DiningTable;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
@@ -41,6 +42,7 @@ public class SimpleServer extends AbstractServer
 	private List<Item> items;
 	private List<Branch> branches;
 	private List<Employee> employees;
+	private List<DiningTable> tables;
 	
 	private List<Delivery> activeDeliveries = new ArrayList<Delivery>();
 	private List<Complaint> activeComplaints = new ArrayList<Complaint>();
@@ -62,6 +64,7 @@ public class SimpleServer extends AbstractServer
 		configuration.addAnnotatedClass(Menu.class);
 		configuration.addAnnotatedClass(Branch.class);
 		configuration.addAnnotatedClass(Employee.class);
+		configuration.addAnnotatedClass(DiningTable.class);
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
@@ -155,9 +158,32 @@ public class SimpleServer extends AbstractServer
     	menu1.addItem(i10);
     	menu1.addItem(i11);
     	menu1.addItem(i12);
-
     	
     	session.save(menu1);
+    	
+    	session.flush();
+    	
+    	DiningTable t1 = new DiningTable(b1, 1, true);
+    	DiningTable t2 = new DiningTable(b1, 2, false);
+    	DiningTable t3 = new DiningTable(b1, 4, false);
+    	DiningTable t4 = new DiningTable(b1, 7, true);
+    	DiningTable t5 = new DiningTable(b1, 10, true);
+    	
+    	session.save(t1);
+    	session.save(t2);
+    	session.save(t3);
+    	session.save(t4);
+    	session.save(t5);
+    	
+    	session.flush();
+    	
+    	b1.addTable(t1);
+    	b1.addTable(t2);
+    	b1.addTable(t3);
+    	b1.addTable(t4);
+    	b1.addTable(t5);
+    	
+    	session.save(b1);
     	
     	session.flush();
     	
@@ -220,6 +246,30 @@ public class SimpleServer extends AbstractServer
     	
     	session.flush();
     	
+    	DiningTable t6 = new DiningTable(b2, 1, false);
+    	DiningTable t7 = new DiningTable(b2, 3, true);
+    	DiningTable t8 = new DiningTable(b2, 6, true);
+    	DiningTable t9 = new DiningTable(b2, 8, false);
+    	DiningTable t10 = new DiningTable(b2, 15, false);
+    	
+    	session.save(t6);
+    	session.save(t7);
+    	session.save(t8);
+    	session.save(t9);
+    	session.save(t10);
+    	
+    	session.flush();
+    	
+    	b2.addTable(t6);
+    	b2.addTable(t7);
+    	b2.addTable(t8);
+    	b2.addTable(t9);
+    	b2.addTable(t10);
+    	
+    	session.save(b2);
+    	
+    	session.flush();
+    	
     	session.getTransaction().commit();
 	}
 	
@@ -249,6 +299,7 @@ public class SimpleServer extends AbstractServer
         	this.items = getAll(Item.class);   	
         	this.branches = getAll(Branch.class);
         	this.employees = getAll(Employee.class);
+        	this.tables = getAll(DiningTable.class);
         	
         	System.out.println("\nItem list:\n");
 
@@ -262,6 +313,13 @@ public class SimpleServer extends AbstractServer
         	for (Branch branch: branches) 
         	{
         		System.out.println(branch);       		
+        	}
+        	
+        	System.out.println("\nTables list:\n");
+
+        	for (DiningTable table: tables) 
+        	{
+        		System.out.println(table);       		
         	}
         	
         	System.out.println("\nEmployees list:\n");
@@ -437,6 +495,20 @@ public class SimpleServer extends AbstractServer
 		{
 			activeReservations.add((Reservation) msg);
 			System.out.println("Recived the following reservation event:\n" + msgString);
+			
+			int target = -1;
+			
+			for (int i=0; i<branches.size(); i++) 
+	    	{
+	    		if(branches.get(i).getName().equals(((Reservation) msg).getBranch()))
+	    		{
+	    			target = i;
+	    			break;
+	    		}
+	    	}
+			
+			branches.get(target).getTable(((Reservation) msg).getTableId()).addReservation(((Reservation) msg));
+			
 		}
 		else if (msg.getClass().equals(Complaint.class)) //getting the complaint info
 		{
