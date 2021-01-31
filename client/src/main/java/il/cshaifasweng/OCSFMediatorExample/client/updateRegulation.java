@@ -31,9 +31,9 @@ public class updateRegulation implements Initializable
 {
 	private List<Branch> branchList;
 	@FXML
-	private TextField openHourHaifa, openMinuteHaifa, closeHourHaifa, closeMinuteHaifa;
+	private ChoiceBox<String> openHourHaifa, openMinuteHaifa, closeHourHaifa, closeMinuteHaifa;
 	@FXML
-	private TextField openHourJerusalem, openMinuteJerusalem, closeHourJerusalem, closeMinuteJerusalem;
+	private ChoiceBox<String> openHourJerusalem, openMinuteJerusalem, closeHourJerusalem, closeMinuteJerusalem;
 	@FXML
 	private TextField maxOpen, maxClose;
 	@FXML
@@ -52,14 +52,14 @@ public class updateRegulation implements Initializable
 	}  
 	
 	private void cleanInput() {
-		openHourHaifa.setText("");
-		openMinuteHaifa.setText("");
-		closeHourHaifa.setText("");
-		closeMinuteHaifa.setText("");
-		openHourJerusalem.setText("");
-		openMinuteJerusalem.setText("");
-		closeHourJerusalem.setText("");
-		closeMinuteJerusalem.setText("");
+		openHourHaifa.setValue(null);
+		openMinuteHaifa.setValue(null);
+		closeHourHaifa.setValue(null);
+		closeMinuteHaifa.setValue(null);
+		openHourJerusalem.setValue(null);
+		openMinuteJerusalem.setValue(null);
+		closeHourJerusalem.setValue(null);
+		closeMinuteJerusalem.setValue(null);
 		maxOpen.setText("");
 		maxClose.setText("");;
 		isDelivery.setSelected(false);
@@ -73,8 +73,8 @@ public class updateRegulation implements Initializable
 		int maxOpenReal, maxCloseReal;
 		boolean isDeliveryReal;
 		
-		if(openHourHaifa.getText() != null && isNumeric(openHourHaifa.getText())) {
-			openHourHaifaReal = Integer.parseInt(openHourHaifa.getText());
+		if(openHourHaifa.getValue() != null) {
+			openHourHaifaReal = Integer.parseInt(openHourHaifa.getValue());
 			if(openHourHaifaReal < 0 || openHourHaifaReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -86,8 +86,8 @@ public class updateRegulation implements Initializable
 			return;
 		}
 		
-		if(openMinuteHaifa.getText() != null && isNumeric(openMinuteHaifa.getText())) {
-			openMinuteHaifaReal = Integer.parseInt(openMinuteHaifa.getText());
+		if(openMinuteHaifa.getValue() != null) {
+			openMinuteHaifaReal = Integer.parseInt(openMinuteHaifa.getValue());
 			if(openMinuteHaifaReal < 0 || openMinuteHaifaReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -98,8 +98,8 @@ public class updateRegulation implements Initializable
 			cleanInput();
 			return;		}
 		
-		if(closeHourHaifa.getText() != null && isNumeric(closeHourHaifa.getText())) {
-			closeHourHaifaReal = Integer.parseInt(closeHourHaifa.getText());
+		if(closeHourHaifa.getValue() != null) {
+			closeHourHaifaReal = Integer.parseInt(closeHourHaifa.getValue());
 			if(closeHourHaifaReal < 0 || closeHourHaifaReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -110,8 +110,8 @@ public class updateRegulation implements Initializable
 			cleanInput();
 			return;		}
 		
-		if(closeMinuteHaifa.getText() != null && isNumeric(closeMinuteHaifa.getText())) {
-			closeMinuteHaifaReal = Integer.parseInt(closeMinuteHaifa.getText());
+		if(closeMinuteHaifa.getValue() != null) {
+			closeMinuteHaifaReal = Integer.parseInt(closeMinuteHaifa.getValue());
 			if(closeMinuteHaifaReal < 0 || closeMinuteHaifaReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -122,8 +122,8 @@ public class updateRegulation implements Initializable
 			cleanInput();
 			return;		}
 		
-		if(openHourJerusalem.getText() != null && isNumeric(openHourJerusalem.getText())) {
-			openHourJerusalemReal = Integer.parseInt(openHourJerusalem.getText());
+		if(openHourJerusalem.getValue() != null) {
+			openHourJerusalemReal = Integer.parseInt(openHourJerusalem.getValue());
 			if(openHourJerusalemReal < 0 || openHourJerusalemReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -134,8 +134,8 @@ public class updateRegulation implements Initializable
 			cleanInput();
 			return;		}
 		
-		if(openMinuteJerusalem.getText() != null && isNumeric(openMinuteJerusalem.getText())) {
-			openMinuteJerusalemReal = Integer.parseInt(openMinuteJerusalem.getText());
+		if(openMinuteJerusalem.getValue() != null) {
+			openMinuteJerusalemReal = Integer.parseInt(openMinuteJerusalem.getValue());
 			if(openMinuteJerusalemReal < 0 || openMinuteJerusalemReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -146,8 +146,8 @@ public class updateRegulation implements Initializable
 			cleanInput();
 			return;		}
 		
-		if(closeHourJerusalem.getText() != null && isNumeric(closeHourJerusalem.getText())) {
-			closeHourJerusalemReal = Integer.parseInt(closeHourJerusalem.getText());
+		if(closeHourJerusalem.getValue() != null) {
+			closeHourJerusalemReal = Integer.parseInt(closeHourJerusalem.getValue());
 			if(closeHourJerusalemReal < 0 || closeHourJerusalemReal > 23) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -158,8 +158,8 @@ public class updateRegulation implements Initializable
 			cleanInput();
 			return;		}
 		
-		if(closeMinuteJerusalem.getText() != null && isNumeric(closeMinuteJerusalem.getText())) {
-			closeMinuteJerusalemReal = Integer.parseInt(closeMinuteJerusalem.getText());
+		if(closeMinuteJerusalem.getValue() != null) {
+			closeMinuteJerusalemReal = Integer.parseInt(closeMinuteJerusalem.getValue());
 			if(closeMinuteJerusalemReal < 0 || closeMinuteJerusalemReal > 59) {
 				Status.setText("Bad input!");
 				cleanInput();
@@ -238,5 +238,56 @@ public class updateRegulation implements Initializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+
+		openHourHaifa.getItems().clear();
+        ObservableList<String> list1 = openHourHaifa.getItems();
+        openMinuteHaifa.getItems().clear();
+        ObservableList<String> list2 = openMinuteHaifa.getItems();
+        closeHourHaifa.getItems().clear();
+        ObservableList<String> list3 = closeHourHaifa.getItems();
+        closeMinuteHaifa.getItems().clear();
+        ObservableList<String> list4 = closeMinuteHaifa.getItems();
+        openHourJerusalem.getItems().clear();
+        ObservableList<String> list5 = openHourJerusalem.getItems();
+        openMinuteJerusalem.getItems().clear();
+        ObservableList<String> list6 = openMinuteJerusalem.getItems();
+        closeHourJerusalem.getItems().clear();
+        ObservableList<String> list7 = closeHourJerusalem.getItems();
+        closeMinuteJerusalem.getItems().clear();
+        ObservableList<String> list8 = closeMinuteJerusalem.getItems();
+        
+        for(int i=0; i <= 23; i++) {
+        	if(i<10) // something like 1305 yields that the minute should be 05 and not 5
+        	{
+        		list1.add("0" + i);
+        		list3.add("0" + i);
+        		list5.add("0" + i);
+        		list7.add("0" + i);
+        	}
+        	else
+        	{
+        		list1.add(String.valueOf(i));
+        		list3.add(String.valueOf(i));
+        		list5.add(String.valueOf(i));
+        		list7.add(String.valueOf(i));
+        	}
+        }
+        for(int i=0; i <= 59; i++) {
+        	if(i<10) // something like 1305 yields that the minute should be 05 and not 5
+        	{
+        		list2.add("0" + i);
+        		list4.add("0" + i);
+        		list6.add("0" + i);
+        		list8.add("0" + i);
+        	}
+        	else
+        	{
+        		list2.add(String.valueOf(i));
+        		list4.add(String.valueOf(i));
+        		list6.add(String.valueOf(i));
+        		list8.add(String.valueOf(i));
+        	}
+        }
 	}
 }

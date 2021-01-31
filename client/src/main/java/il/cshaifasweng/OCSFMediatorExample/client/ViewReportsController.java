@@ -89,6 +89,5 @@ public class ViewReportsController implements Initializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		regulations = SimpleClient.getMsgString();
 	}
 }
