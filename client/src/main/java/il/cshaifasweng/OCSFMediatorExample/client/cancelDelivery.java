@@ -81,9 +81,7 @@ public class cancelDelivery implements Initializable
     		return;
     	} 
     	String chosenDelivery = chooseDelivery.getValue();
-    	System.out.println(chosenDelivery);
     	int index = findIndex(chosenDelivery);
-    	System.out.println(index);
     	int hour = activeDeliveries.get(index).getHour();
     	String date = activeDeliveries.get(index).getDate();
     	double total = activeDeliveries.get(index).getTotal();
