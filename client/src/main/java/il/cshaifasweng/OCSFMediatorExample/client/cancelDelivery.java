@@ -45,15 +45,7 @@ public class cancelDelivery implements Initializable
     @Subscribe
     public void onWarningEvent(GetBranchesEvent event) 
     {
-    	BranchPick.getItems().clear();
-        ObservableList<String> list = BranchPick.getItems();
-        
-        for(int i=0; i<event.getDetails().getBranches().size(); i++)
-        {
-        	list.add(event.getDetails().getBranches().get(i).getName());
-        }	
-        
-        branchList = event.getDetails().getBranches();
+    	
     }
     
 	@Override
@@ -72,20 +64,6 @@ public class cancelDelivery implements Initializable
 			e.printStackTrace();
 		}
 		
-		cart = new Delivery();
-		List<Item> l = new ArrayList<Item>();
-		cart.setItemsList(l);
 		
-		PaymentPick.getItems().clear();
-        ObservableList<String> list = PaymentPick.getItems();
-        
-        list.add("Cash");
-        list.add("Credit");
-        
-        TAOrDeliveryPick.getItems().clear();
-        ObservableList<String> list1 = TAOrDeliveryPick.getItems();
-        
-        list1.add("TakeAway");
-        list1.add("Delivery");
 	}
 }
