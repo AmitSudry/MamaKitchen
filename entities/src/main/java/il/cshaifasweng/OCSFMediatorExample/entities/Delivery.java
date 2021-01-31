@@ -18,6 +18,7 @@ public class Delivery implements Serializable
 	private String phoneNumber; 
 	private double total; //total price of delivery(if not TA it includes the dlivery fee)
 	private boolean isCreditCard; //payment method(cas/credit)
+	private int id;
 	
 	public Delivery()
 	{
@@ -100,6 +101,14 @@ public class Delivery implements Serializable
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	
+	public int getID() {
+		return id;
+	}
+
+	public void setID(int id) {
+		this.id = id;
 	}
 
 	public boolean isCreditCard() {

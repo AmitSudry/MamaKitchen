@@ -71,7 +71,11 @@ public class CustomerController implements Initializable
     {
     	App.setRoot("reservation");
     }   
-    
+    @FXML
+    void CancelDelivery() throws IOException
+    {
+    	App.setRoot("cancelDelivery");
+    }
     @Subscribe
     public void onWarningEvent(GetBranchesEvent event) 
     {

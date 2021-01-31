@@ -30,6 +30,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Delivery;
 import il.cshaifasweng.OCSFMediatorExample.entities.DiningTable;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetDeliveries;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Login;
@@ -547,6 +548,25 @@ public class SimpleServer extends AbstractServer
 			{
 				e.printStackTrace();
 			}
+		}
+		else if (msgString.startsWith("#getActiveDeliveries")) //receiving request to forward the branch list
+		{
+			GetDeliveries warning = new GetDeliveries("Warning from server!", activeDeliveries);
+			try 
+			{
+				client.sendToClient(warning);
+				System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (msgString.startsWith("#removeDelivery")) //receiving request to forward the branch list
+		{
+			String[] tokens = msgString.split("\\s+");
+			int index = Integer.parseInt(tokens[1]);
+			activeDeliveries.remove(index);
 		}
 		else if (msgString.startsWith("#updateItem")) //receiving requests to update an item
 		{
