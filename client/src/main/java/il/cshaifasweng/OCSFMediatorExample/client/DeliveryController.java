@@ -36,6 +36,8 @@ public class DeliveryController implements Initializable
 	private int openMinute;
 	private int closeMinute;
 	
+	private int branchIndex;
+	
 	private boolean isDelivery;
 	
 	@FXML
@@ -92,7 +94,7 @@ public class DeliveryController implements Initializable
     	ItemsPick.getItems().clear();
         ObservableList<String> list = ItemsPick.getItems();
         
-        int branchIndex = -1;
+        branchIndex = -1;
         for(int i=0; i<branchList.size(); i++)
         {
         	if(branchList.get(i).getName().equals(BranchPick.getValue().toString()))
@@ -209,8 +211,8 @@ public class DeliveryController implements Initializable
     	cart.setCreditCard(isCredit);
     	cart.setDate(DatePick.getValue().toString());
     	double total = Double.parseDouble(Total.getText());
-
     	OrderStatus.setText("Your order has been accepted!");
+    	
     	if(!isTA)
     	{
     		if (!isDelivery) {
@@ -238,6 +240,7 @@ public class DeliveryController implements Initializable
     	try 
     	{
         	SimpleClient.getClient().sendToServer(cart);
+        	SimpleClient.getClient().sendToServer("#incDelivery " + branchIndex + " " + isTA);
 		} 
     	catch (IOException e) 
     	{

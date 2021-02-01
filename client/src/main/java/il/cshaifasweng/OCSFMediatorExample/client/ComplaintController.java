@@ -56,6 +56,7 @@ public class ComplaintController implements Initializable
     	try 
     	{
         	SimpleClient.getClient().sendToServer(c);
+        	SimpleClient.getClient().sendToServer("#incComplaint");
 		} 
     	catch (IOException e) 
     	{

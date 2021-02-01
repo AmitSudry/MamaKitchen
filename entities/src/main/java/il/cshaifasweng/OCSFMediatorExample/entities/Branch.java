@@ -46,6 +46,14 @@ public class Branch implements Serializable
 	private int maxOpen, maxClose;
 	private boolean isDelivery;
 	
+	
+	private int deliveryCounter;
+	private int takeawayCounter;
+	private int reservationCounter;
+	private int rejectedCustomersCounter;
+	private int complaintsToal;
+	private int complaintsClosed;
+	
 	//@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_id")
 	@OneToOne(mappedBy = "branch")
@@ -72,6 +80,13 @@ public class Branch implements Serializable
 		this.isDelivery = isDelivery;
 		
 		this.tableList = new ArrayList<DiningTable>();
+		
+		deliveryCounter = 0;
+		takeawayCounter = 0;
+		reservationCounter = 0;
+		rejectedCustomersCounter = 0;
+		complaintsToal = 0;
+		complaintsClosed = 0;
 	}
 	
 	public String getName() {
@@ -160,6 +175,55 @@ public class Branch implements Serializable
 	public void setIsDelivery(boolean isDelivery) {
 		this.isDelivery = isDelivery;
 	}
+	
+	public int getDeliveryCounter() {
+		return deliveryCounter;
+	}
+
+	public void incDeliveryCounter() {
+		this.deliveryCounter++;
+	}
+
+	public int getTakeawayCounter() {
+		return takeawayCounter;
+	}
+
+	public void incTakeawayCounter() {
+		this.takeawayCounter++;
+	}
+
+	public int getRejectedCustomersCounter() {
+		return rejectedCustomersCounter;
+	}
+
+	public void incRejectedCustomersCounter() {
+		this.rejectedCustomersCounter++;
+	}
+
+	public int getComplaintsToal() {
+		return complaintsToal;
+	}
+
+	public void incComplaintsToal() {
+		this.complaintsToal++;
+	}
+
+	public int getComplaintsClosed() {
+		return complaintsClosed;
+	}
+
+	public void incComplaintsClosed() {
+		this.complaintsClosed++;
+	}
+	
+	public int getReservationCounter() {
+		return reservationCounter;
+	}
+	
+	public void incReservationCounter() {
+		this.reservationCounter++;
+	}
+
 
 	@Override
 	public String toString() {

@@ -78,6 +78,7 @@ public class ViewComplaintsController implements Initializable
     	try 
     	{
         	SimpleClient.getClient().sendToServer(complaints.get(index));
+        	SimpleClient.getClient().sendToServer("#incComplaintsClosed");
 		} 
     	catch (IOException e) 
     	{

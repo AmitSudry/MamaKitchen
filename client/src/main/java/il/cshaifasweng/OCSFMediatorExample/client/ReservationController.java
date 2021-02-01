@@ -37,6 +37,8 @@ public class ReservationController implements Initializable
 	private int maxClose;
 	private int maxOpen;
 	
+	private int branchIndex;
+	
 	@FXML
     private TextField Phone;
 	
@@ -73,7 +75,7 @@ public class ReservationController implements Initializable
     	if(BranchPick.getValue()==null)
     		return;
     	
-        int branchIndex = -1;
+        branchIndex = -1;
         for(int i=0; i<branchList.size(); i++)
         {
         	if(branchList.get(i).getName().equals(BranchPick.getValue().toString()))
@@ -186,10 +188,28 @@ public class ReservationController implements Initializable
     	boolean isInside = DiningPick.getValue().toString().equals("Inside") ? true : false;
     	
     	if (isInside && numOfPeople > maxClose) {
+    		try 
+        	{
+            	SimpleClient.getClient().sendToServer("#incRejectedCustomer " + branchIndex);
+    		} 
+        	catch (IOException e) 
+        	{
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     		ReservationStatus.setText("Maximum number of custumers in closed space is " + String.valueOf(maxClose));
     		return;
     	}
     	if (!isInside && numOfPeople > maxOpen) {
+    		try 
+        	{
+            	SimpleClient.getClient().sendToServer("#incRejectedCustomer " + branchIndex);
+    		} 
+        	catch (IOException e) 
+        	{
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     		ReservationStatus.setText("Maximum number of custumers in open space is " + String.valueOf(maxOpen));
     		return;
     	}
@@ -222,6 +242,7 @@ public class ReservationController implements Initializable
     	try 
     	{
         	SimpleClient.getClient().sendToServer(r);
+        	SimpleClient.getClient().sendToServer("#incReservation " + branchIndex);
 		} 
     	catch (IOException e) 
     	{

@@ -85,10 +85,11 @@ public class cancelDelivery implements Initializable
     	int hour = activeDeliveries.get(index).getHour();
     	String date = activeDeliveries.get(index).getDate();
     	double total = activeDeliveries.get(index).getTotal();
+    	boolean isTA = activeDeliveries.get(index).isTA();
     	try 
     	{
 			SimpleClient.getClient().sendToServer("#removeDelivery " + index);
-		} 
+			} 
     	catch (IOException e) 
     	{
 			// TODO Auto-generated catch block

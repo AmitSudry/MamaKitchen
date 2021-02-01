@@ -182,18 +182,23 @@ public class EmployeeMainController implements Initializable
 	}
 	
 	@FXML
-	void SwitchToViewReportsController(ActionEvent event) 
+	void SwitchToViewReportsController(ActionEvent event) throws IOException 
 	{
 		if(employee==null)
 			return;
 		
-		if(employee.getType()!=5) //not the chain manager
+		if(employee.getType()==5) //not the chain manager
 		{
+			App.setRoot("viewReportsChain");
+		}
+		else if(employee.getType() == 4) {
+			App.setRoot("viewReportsBranch");
+		} 
+		else {
 			ActionStatus.setText("You are not authorized for this action!");
 			return;
 		}
 		
-		//App.setRoot("viewReports");
 	}
 	@FXML
 	void showRegulations(ActionEvent event) {

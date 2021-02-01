@@ -592,6 +592,40 @@ public class SimpleServer extends AbstractServer
 			int index = Integer.parseInt(tokens[1]);
 			activeDeliveries.remove(index);
 		}
+		else if (msgString.startsWith("#incDelivery"))
+		{
+			String[] tokens = msgString.split("\\s+");
+			int branchIndex = Integer.parseInt(tokens[1]);
+			boolean isTA = Boolean.parseBoolean(tokens[2]);
+			if (isTA)
+				branches.get(branchIndex).incTakeawayCounter();
+			else
+				branches.get(branchIndex).incDeliveryCounter();
+		}
+		else if (msgString.startsWith("#incReservation"))
+		{
+			String[] tokens = msgString.split("\\s+");
+			int branchIndex = Integer.parseInt(tokens[1]);
+			branches.get(branchIndex).incReservationCounter();;
+		}
+		else if (msgString.startsWith("#incRejectedCustomer"))
+		{
+			String[] tokens = msgString.split("\\s+");
+			int branchIndex = Integer.parseInt(tokens[1]);
+			branches.get(branchIndex).incRejectedCustomersCounter();
+		}
+		else if (msgString.startsWith("#incComplaintsClosed"))
+		{
+			for(int i=0; i < branches.size(); i++) {
+				branches.get(i).incComplaintsClosed();
+			}
+		}
+		else if (msgString.startsWith("#incComplaint"))
+		{
+			for(int i=0; i < branches.size(); i++) {
+				branches.get(i).incComplaintsToal();
+			}
+		}
 		else if (msgString.startsWith("#removeReservation"))
 		{
 			String[] tokens = msgString.split("\\s+");
