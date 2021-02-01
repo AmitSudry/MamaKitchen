@@ -32,6 +32,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetDeliveries;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetReservation;
 import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Login;
 import il.cshaifasweng.OCSFMediatorExample.entities.Menu;
@@ -562,11 +563,30 @@ public class SimpleServer extends AbstractServer
 				e.printStackTrace();
 			}
 		}
-		else if (msgString.startsWith("#removeDelivery")) //receiving request to forward the branch list
+		else if (msgString.startsWith("#getActiveReservations")) //receiving request to forward the branch list
+		{
+			GetReservation warning = new GetReservation("Warning from server!", activeReservations);
+			try 
+			{
+				client.sendToClient(warning);
+				System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (msgString.startsWith("#removeDelivery"))
 		{
 			String[] tokens = msgString.split("\\s+");
 			int index = Integer.parseInt(tokens[1]);
 			activeDeliveries.remove(index);
+		}
+		else if (msgString.startsWith("#removeReservation"))
+		{
+			String[] tokens = msgString.split("\\s+");
+			int index = Integer.parseInt(tokens[1]);
+			activeReservations.remove(index);
 		}
 		else if (msgString.startsWith("#updateItem")) //receiving requests to update an item
 		{

@@ -195,7 +195,7 @@ public class ReservationController implements Initializable
     	}
     	
     	Reservation r = new Reservation(BranchPick.getValue().toString(), Date.getValue().toString(),
-    			numOfPeople, Integer.parseInt(HourPick.getValue().toString()),
+    			numOfPeople, requestedHour,
     			Name.getText(), isInside, Phone.getText(), -1);
     	
     	int tableId = -1;

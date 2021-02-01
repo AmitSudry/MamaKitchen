@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetDeliveries;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetReservation;
 
 public class SimpleClient extends AbstractClient 
 {
@@ -36,6 +37,10 @@ public class SimpleClient extends AbstractClient
 		else if (msg.getClass().equals(GetDeliveries.class)) 
 		{
 			EventBus.getDefault().post(new GetDeliveriesEvent((GetDeliveries) msg));
+		}
+		else if (msg.getClass().equals(GetReservation.class)) 
+		{
+			EventBus.getDefault().post(new GetReservationEvent((GetReservation) msg));
 		}
 		
 	}

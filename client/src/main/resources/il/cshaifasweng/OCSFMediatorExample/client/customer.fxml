@@ -22,13 +22,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Button fx:id="PreviewMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SwitchToMenuController" text="Preview Menu" textAlignment="CENTER" />
-            <Button fx:id="OrderDelivery" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#SwitchToDeliveryController" text="Order Delivery" GridPane.rowIndex="2" />
+            <Button fx:id="OrderDelivery" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#SwitchToDeliveryController" text="Order Delivery" GridPane.rowIndex="3" />
             <Button fx:id="BookTable" layoutX="10.0" layoutY="37.0" mnemonicParsing="false" onAction="#SwitchToReservationController" text="Make A Reservation" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
-            <Button fx:id="Complaint" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#SwitchToComplaintController" text="File A Complaint" GridPane.rowIndex="4" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#CancelDelivery" text="Cancel Delivery" textAlignment="CENTER" GridPane.rowIndex="3" />
+            <Button fx:id="Complaint" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#SwitchToComplaintController" text="File A Complaint" GridPane.rowIndex="5" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#CancelDelivery" text="Cancel Delivery" textAlignment="CENTER" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#SwitchToCancelReservationController" text="Cancel A Reservation" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <TextArea fx:id="area" editable="false" prefHeight="200.0" prefWidth="200.0" />

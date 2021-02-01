@@ -25,24 +25,24 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Entity
-@Table(name = "deliveries")
-public class GetDeliveries implements Serializable
+@Table(name = "reservations")
+public class GetReservation implements Serializable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8224097662914849956L;
 	
-	List<Delivery> deliveries;
+	List<Reservation> reservations;
 	private String message;
 	private LocalTime time;
 	
-	public GetDeliveries(String message, List<Delivery> deliveries) 
+	public GetReservation(String message, List<Reservation> reservations) 
 	{
 		super();
 		this.message = message;
 		this.time = LocalTime.now();
-		this.deliveries = deliveries;
+		this.reservations = reservations;
 	}
 		
 	public String getMessage() 
@@ -60,13 +60,13 @@ public class GetDeliveries implements Serializable
 		return time;
 	}
 	
-	public List<Delivery> getDeliveries() 
+	public List<Reservation> getReservation() 
 	{
-		return deliveries;
+		return reservations;
 	}
 
-	public void setDeliveries(List<Delivery> deliveries) 
+	public void setReservation(List<Reservation> reservations) 
 	{
-		this.deliveries = deliveries;
+		this.reservations = reservations;
 	}
 }

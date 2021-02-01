@@ -121,6 +121,8 @@ public class cancelDelivery implements Initializable
     		} else if(hour - hoursNow == 0) {
     			status.setText("Delivery canceled! you got 0% back (" + 0 + ")");
     		}
+    	} else {
+    		status.setText("Delivery canceled! you got 100% back (" + total + ")");
     	}
     		
     }
@@ -144,7 +146,7 @@ public class cancelDelivery implements Initializable
     @Subscribe
     public void onWarningEvent(GetDeliveriesEvent event) 
     {
-    	activeDeliveries = event.getDetails().getBranches(); //it's getDeliveries!
+    	activeDeliveries = event.getDetails().getDeliveries(); //it's getDeliveries!
     	chooseDelivery.getItems().clear();
         ObservableList<String> list2 = chooseDelivery.getItems();
         for(int i=0; i < activeDeliveries.size(); i++) {
