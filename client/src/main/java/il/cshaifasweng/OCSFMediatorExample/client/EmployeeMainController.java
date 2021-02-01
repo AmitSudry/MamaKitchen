@@ -105,6 +105,21 @@ public class EmployeeMainController implements Initializable
 	}
 	
 	@FXML
+    void SwitchToAssignTableController(ActionEvent event) throws IOException 
+	{
+		if(employee==null)
+			return;
+		
+		if(employee.getType()!=1) //if you're not the hostess
+		{
+			ActionStatus.setText("You are not authorized for this action!");
+			return;
+		}
+		
+		App.setRoot("reservation");
+    }
+	
+	@FXML
 	void priceButtonChanged(ActionEvent event) throws IOException {
 		if(employee.getType() != 5) {
 			ActionStatus.setText("You are not authorized for this action!");
