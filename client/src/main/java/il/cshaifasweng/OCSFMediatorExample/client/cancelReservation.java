@@ -102,9 +102,7 @@ public class cancelReservation implements Initializable
     		TimeZone tz = TimeZone.getTimeZone("Asia/Jerusalem");
     		Calendar calendar = Calendar.getInstance();
     		int hoursNow = calendar.get(Calendar.HOUR_OF_DAY);
-    		hoursNow = 11;
     		int minutesNow = calendar.get(Calendar.MINUTE);
-    		minutesNow = 10;
     		int minutes = hour % 100;
     		hour /= 100;
     		if (hour - hoursNow > 1) {
