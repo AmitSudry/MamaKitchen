@@ -49,6 +49,7 @@ public class SimpleServer extends AbstractServer
 	
 	private List<Delivery> activeDeliveries = new ArrayList<Delivery>();
 	private List<Complaint> activeComplaints = new ArrayList<Complaint>();
+	private List<Complaint> handledComplaints = new ArrayList<Complaint>();
 	private List<Reservation> activeReservations = new ArrayList<Reservation>();
 	private static int openHourHaifa, openMinuteHaifa, closeHourHaifa, closeMinuteHaifa;
 	private static int openHourJerusalem, openMinuteJerusalem, closeHourJerusalem, closeMinuteJerusalem;
@@ -515,8 +516,17 @@ public class SimpleServer extends AbstractServer
 		}
 		else if (msg.getClass().equals(Complaint.class)) //getting the complaint info
 		{
-			activeComplaints.add((Complaint) msg);
-			System.out.println("Recived the following reservation event:\n" + msgString);
+			if (!((Complaint) msg).isHandled()) activeComplaints.add((Complaint) msg);
+			else {
+				handledComplaints.add((Complaint) msg);
+				
+				for (int i = 0; i < activeComplaints.size(); i++) {
+					if (activeComplaints.get(i).getName().equals(((Complaint) msg).getName()) && activeComplaints.get(i).getComplaint().equals(((Complaint) msg).getComplaint())) {
+						activeComplaints.remove(i);
+					}
+				}
+			}
+			System.out.println("Recived the following complaint event:\n" + msgString);
 		}
 		else if (msgString.startsWith("#reports"))
 		{
