@@ -116,7 +116,7 @@ public class EmployeeMainController implements Initializable
 			return;
 		}
 		
-		App.setRoot("reservation");
+		App.setRoot("assignTable");
     }
 	
 	@FXML
