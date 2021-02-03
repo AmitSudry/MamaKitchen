@@ -38,6 +38,9 @@ public class Item implements Serializable
 	
 	@Column(name = "item_price")
 	private double price;
+	
+	@Column(name = "item_ingridients")
+	private String ingridients;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "menu_id")
@@ -48,11 +51,12 @@ public class Item implements Serializable
 		super();
 	}
 	
-	public Item(String name, String type, double price, Menu menu) 
+	public Item(String name, String type, String ingridients, double price, Menu menu) 
 	{
 		super();
 		this.name = name;
 		this.type = type;
+		this.ingridients = ingridients;
 		this.price = price;
 		this.menu = menu;
 	}
@@ -76,6 +80,16 @@ public class Item implements Serializable
 	public void setName(String name) 
 	{
 		this.name = name;
+	}
+	
+	public String getIngridients() 
+	{
+		return ingridients;
+	}
+
+	public void setIngridients(String ingridients) 
+	{
+		this.ingridients = ingridients;
 	}
 
 	public String getType() 
@@ -110,7 +124,7 @@ public class Item implements Serializable
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", type=" + type + ", price=" + price + "]";
+		return "Item [id=" + id + ", name=" + name + ", ingridients=" + ingridients + ", type=" + type + ", price=" + price + "]";
 	}
 
 	

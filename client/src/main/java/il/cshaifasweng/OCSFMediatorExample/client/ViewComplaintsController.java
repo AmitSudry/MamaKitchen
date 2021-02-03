@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -28,6 +29,9 @@ public class ViewComplaintsController implements Initializable
 	
 	@FXML
     private ComboBox<String> ComplaintPick;
+	
+	@FXML
+    private CheckBox isRefund;
 
     @FXML
     private TextArea area;
@@ -38,7 +42,7 @@ public class ViewComplaintsController implements Initializable
 	
     @FXML
     void ApproveBranchChoise(ActionEvent event)
-    {
+    {	
     	if(ComplaintPick.getValue()==null)
     		return;
     	int index = Integer.parseInt(ComplaintPick.getValue().toString()) - 1;
@@ -46,7 +50,45 @@ public class ViewComplaintsController implements Initializable
     	area.setText("");
     	area.appendText("Customer Name: " + complaints.get(index).getName() + "\n\n");
     	area.appendText("=======================================" + "\n\n");
-		area.appendText(complaints.get(index).getComplaint() + "\n");
+		area.appendText(complaints.get(index).getComplaint() + "\n\n");
+		area.appendText("=======================================" + "\n\n");
+		
+		if (complaints.get(index).isHandled()) {
+			String refund = complaints.get(index).isRefunded() ? "with a refund.\n" : "without a refund.\n";
+			area.appendText("This complaint is handled " + refund);
+		}
+		else {
+			area.appendText("This complaint isn't handled yet.\n");
+		}
+    }
+    
+    @FXML
+    void HandleComplaint(ActionEvent event) {
+    	if(ComplaintPick.getValue()==null)
+    		return;
+    	int index = Integer.parseInt(ComplaintPick.getValue().toString()) - 1;
+    	
+    	if (complaints.get(index).isHandled()) {
+    		ActionStatus.setText("The complaint is alredy handled!");
+    		return;
+    	}
+    	
+    	complaints.get(index).Handle(isRefund.isSelected());
+    	
+    	try 
+    	{
+        	SimpleClient.getClient().sendToServer(complaints.get(index));
+        	SimpleClient.getClient().sendToServer("#incComplaintsClosed");
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	ActionStatus.setText("The complaint is handled!");
+    	
+    	isRefund.setSelected(false);
+    	ApproveBranchChoise(event);
     }
     
 	@FXML

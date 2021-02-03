@@ -1,15 +1,13 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.Item;
 import il.cshaifasweng.OCSFMediatorExample.entities.Employee;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetBranches;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetDeliveries;
 import il.cshaifasweng.OCSFMediatorExample.entities.GetReports;
+import il.cshaifasweng.OCSFMediatorExample.entities.GetReservation;
 
 public class SimpleClient extends AbstractClient 
 {
@@ -36,6 +34,15 @@ public class SimpleClient extends AbstractClient
 		{
 			EventBus.getDefault().post((GetReports) msg);
 		}
+		else if (msg.getClass().equals(GetDeliveries.class)) 
+		{
+			EventBus.getDefault().post(new GetDeliveriesEvent((GetDeliveries) msg));
+		}
+		else if (msg.getClass().equals(GetReservation.class)) 
+		{
+			EventBus.getDefault().post(new GetReservationEvent((GetReservation) msg));
+		}
+		
 	}
 	
 	public static SimpleClient getClient() 
@@ -45,5 +52,6 @@ public class SimpleClient extends AbstractClient
 		}
 		return client;
 	}
+	
 
 }

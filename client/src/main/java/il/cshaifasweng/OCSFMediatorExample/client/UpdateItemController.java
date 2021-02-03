@@ -38,9 +38,15 @@ public class UpdateItemController implements Initializable
 
     @FXML
     private ComboBox<String> ItemPick;
-
+    
+    @FXML 
+    private TextField nameText;
+    
     @FXML
     private TextField typeText;
+    
+    @FXML
+    private TextField ingridientsText;
 
     @FXML
     private CheckBox removeBool;
@@ -71,10 +77,13 @@ public class UpdateItemController implements Initializable
         		branchIndex = i;
         		break;
         	}	
-        }	
+        }
+        
        
         ItemPick.getItems().clear();
         ObservableList<String> list = ItemPick.getItems();
+        
+        list.add("add new item");
         
     	area.setText("");
     	for(int i=0; i<branchList.get(branchIndex).getMenu().getItemList().size(); i++)
@@ -96,33 +105,67 @@ public class UpdateItemController implements Initializable
 		}
 		else
 		{
-			if(priceText.getText().equals("") || typeText.getText().equals(""))
+			if(typeText.getText().equals(""))
 			{
 				Status.setText("You're missing fields!");
 				return;
 			}
 			else
 			{
-				try 
-		    	{
-		    		Integer.parseInt(priceText.getText());
-		        } 
-		    	catch (final NumberFormatException e) 
-		    	{
-		    		Status.setText("Invalid new price!");
-		    		return;
-		        }
+				if(ingridientsText.getText().equals("")) {
+					ingridientsText.setText("miss");
+				}
+				if(priceText.getText().equals("")) {
+					priceText.setText("miss");
+				} else {
+					try 
+			    	{
+			    		Float.parseFloat(priceText.getText());
+			        } 
+			    	catch (final NumberFormatException e) 
+			    	{
+			    		Status.setText("Invalid new price!");
+			    		priceText.setText("");
+			    		return;
+			        }
+				}
 			}
-			
-			SimpleClient.getClient().sendToServer("#updateItem "  
-					+ ItemPick.getValue().toString() + " "
-					+ priceText.getText() + " " 
-					+ typeText.getText() + " " 
-					+ BranchPick.getValue().toString());
+			if("add new item" == ItemPick.getValue().toString()) {
+				if(priceText.getText().contains("miss")) {
+					Status.setText("Invalid price for new product!");
+					priceText.setText("");
+					return;
+				}
+				if(ingridientsText.getText().contains("miss")) {
+					Status.setText("Invalid ingridients for new product!");
+					ingridientsText.setText("");
+					return;
+				}
+				SimpleClient.getClient().sendToServer("#addItem "  
+						+ nameText.getText() + " "
+						+ typeText.getText() + " " 
+						+ ingridientsText.getText() + " "
+						+ priceText.getText() + " " 
+						+ BranchPick.getValue().toString());
+			} else {
+				if(ingridientsText.getText().contains("miss")) {
+					Status.setText("Invalid ingridients for the product!");
+					ingridientsText.setText("");
+					return;
+				}
+				SimpleClient.getClient().sendToServer("#updateItem "  
+						+ ItemPick.getValue().toString() + " "
+						+ priceText.getText() + " " 
+						+ typeText.getText() + " " 
+						+ BranchPick.getValue().toString() + " "
+						+ ingridientsText.getText());
+			}
 		}
 		
+		nameText.setText("");
 		priceText.setText("");
 		typeText.setText("");
+		ingridientsText.setText("");
 		removeBool.setSelected(false);
 		area.setText("");
 		

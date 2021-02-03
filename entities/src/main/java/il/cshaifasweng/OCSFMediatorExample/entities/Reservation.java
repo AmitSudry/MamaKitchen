@@ -16,6 +16,7 @@ public class Reservation implements Serializable
 	private String name; //name of customer
 	private boolean isInsideDining; //address in case of not TA
 	private String phoneNumber; 
+	private int table_id;
 	
 	public Reservation()
 	{
@@ -23,7 +24,7 @@ public class Reservation implements Serializable
 	}
 
 	public Reservation(String branch, String date, int numOfPeople, int hour, String name, boolean isInsideDining,
-			String phoneNumber) {
+			String phoneNumber, int table_id) {
 		super();
 		this.branch = branch;
 		this.date = date;
@@ -32,6 +33,7 @@ public class Reservation implements Serializable
 		this.name = name;
 		this.isInsideDining = isInsideDining;
 		this.phoneNumber = phoneNumber;
+		this.table_id = table_id;
 	}
 
 	public String getBranch() {
@@ -88,6 +90,14 @@ public class Reservation implements Serializable
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public void setTableId(int id) {
+		this.table_id = id;
+	}
+	
+	public int getTableId() {
+		return this.table_id;
 	}
 
 	@Override
